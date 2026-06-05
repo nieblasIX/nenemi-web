@@ -1757,21 +1757,32 @@ footer {
     <!-- Expedición 01 -->
     <div class="exp-card activa" id="exp-0">
       <div class="exp-card-img">
-        <!-- Imagen principal: Peñas del Zumate -->
-        <img src="img/camino1.jpg" alt="Camino a Peña del Zumate, bosque mesófilo" class="exp-img-principal">
+    <div class="exp-card-img">
+      <!-- Imagen Principal (Carrusel) -->
+      <div class="carousel-container">
+        <img src="img/camino1.jpg" alt="Peña del Zumate" class="carousel-img active" data-index="0">
+        <img src="img/bosq8.jpg" alt="Bosque" class="carousel-img" data-index="1" style="display:none;">
+        <img src="img/roca5.jpg" alt="Roca" class="carousel-img" data-index="2" style="display:none;">
+        <img src="img/roca7.jpg" alt="Roca 2" class="carousel-img" data-index="3" style="display:none;">
         
-        <!-- Badge de expedición -->
-        <div class="exp-img-badge">
-          <div class="exp-img-badge-num">Expedición 01</div>
-        </div>
-        
-        <!-- Miniaturas (Opcional: puedes agregar más <img> aquí si quieres un carrusel) -->
-        <div class="exp-miniaturas">
-          <img src="img/bosq8.jpg" alt="Detalle del bosque" class="exp-miniatura-img">
-          <img src="img/roca5.jpg" alt="Rocas del sendero" class="exp-miniatura-img">
-          <img src="img/roca7.jpg" alt="Formación rocosa" class="exp-miniatura-img">
-        </div>
+        <!-- Flechas de navegación -->
+        <button class="carousel-btn prev" onclick="cambiarImagen(-1)">&#10094;</button>
+        <button class="carousel-btn next" onclick="cambiarImagen(1)">&#10095;</button>
       </div>
+
+      <!-- Miniaturas -->
+      <div class="carousel-thumbnails">
+        <img src="img/camino1.jpg" class="thumb active" onclick="setImagen(0)">
+        <img src="img/bosq8.jpg" class="thumb" onclick="setImagen(1)">
+        <img src="img/roca5.jpg" class="thumb" onclick="setImagen(2)">
+        <img src="img/roca7.jpg" class="thumb" onclick="setImagen(3)">
+      </div>
+
+      <!-- Badge de expedición (flotando sobre la imagen si el CSS lo permite) -->
+      <div class="exp-img-badge">
+        <div class="exp-img-badge-num">Expedición 01</div>
+      </div>
+    </div>
       <div class="exp-card-info">
         <div class="exp-dificultad">
           <div class="exp-dots">
