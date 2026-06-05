@@ -1757,32 +1757,20 @@ footer {
     <!-- Expedición 01 -->
     <div class="exp-card activa" id="exp-0">
       <div class="exp-card-img">
-    <div class="exp-card-img">
-      <!-- Imagen Principal (Carrusel) -->
-      <div class="carousel-container">
-        <img src="img/camino1.jpg" alt="Peña del Zumate" class="carousel-img active" data-index="0">
-        <img src="img/bosq8.jpg" alt="Bosque" class="carousel-img" data-index="1" style="display:none;">
-        <img src="img/roca5.jpg" alt="Roca" class="carousel-img" data-index="2" style="display:none;">
-        <img src="img/roca7.jpg" alt="Roca 2" class="carousel-img" data-index="3" style="display:none;">
-        
-        <!-- Flechas de navegación -->
-        <button class="carousel-btn prev" onclick="cambiarImagen(-1)">&#10094;</button>
-        <button class="carousel-btn next" onclick="cambiarImagen(1)">&#10095;</button>
+        <!-- IMAGEN: Peña del Zumate, bosque mesófilo, niebla entre árboles altos -->
+        <div class="exp-card-img-placeholder">
+          <svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="rgba(232,220,198,0.2)" stroke-width="1.5"><rect x="3" y="3" width="18" height="18" rx="2"/><circle cx="8.5" cy="8.5" r="1.5"/><polyline points="21,15 16,10 5,21"/></svg>
+          <span style="font-size:0.52rem; letter-spacing:0.2em; text-transform:uppercase; color:rgba(232,220,198,0.18);">Peña del Zumate<br>Bosque mesófilo · Niebla</span>
+        </div>
+        <div class="exp-img-badge">
+          <div class="exp-img-badge-num">Expedición 01</div>
+        </div>
+        <div class="exp-miniaturas">
+          <div class="exp-miniatura"></div>
+          <div class="exp-miniatura"></div>
+          <div class="exp-miniatura"></div>
+        </div>
       </div>
-
-      <!-- Miniaturas -->
-      <div class="carousel-thumbnails">
-        <img src="img/camino1.jpg" class="thumb active" onclick="setImagen(0)">
-        <img src="img/bosq8.jpg" class="thumb" onclick="setImagen(1)">
-        <img src="img/roca5.jpg" class="thumb" onclick="setImagen(2)">
-        <img src="img/roca7.jpg" class="thumb" onclick="setImagen(3)">
-      </div>
-
-      <!-- Badge de expedición (flotando sobre la imagen si el CSS lo permite) -->
-      <div class="exp-img-badge">
-        <div class="exp-img-badge-num">Expedición 01</div>
-      </div>
-    </div>
       <div class="exp-card-info">
         <div class="exp-dificultad">
           <div class="exp-dots">
