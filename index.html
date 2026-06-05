@@ -3,2191 +3,2380 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>NENEMI — Caminar la Montaña Viva</title>
+<title>NENEMI — Expediciones Bioculturales · Hidalgo, México</title>
+<meta name="description" content="Expediciones guiadas en los bosques y montañas de Hidalgo. Para familias, parejas y amigos desde Ciudad de México. Geología, naturaleza, bienestar.">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,500;0,600;1,400;1,500&family=Roboto+Mono:wght@300;400&family=Cormorant+Garamond:ital,wght@0,300;0,400;1,300;1,400&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,500;1,400;1,500&family=DM+Sans:ital,opsz,wght@0,9..40,300;0,9..40,400;0,9..40,500;1,9..40,300&family=Roboto+Mono:wght@300;400&display=swap" rel="stylesheet">
+
 <style>
-/* ============================================================
-   NENEMI — Variables & Reset
-   ============================================================ */
+/* ==================================================
+   NENEMI v2 — Design System
+   Filosofía: Claridad comercial con alma biocultural
+   ================================================== */
 :root {
-  --verde-profundo: #1a2e1a;
-  --verde-bosque: #2d4a2d;
-  --verde-niebla: #4a6741;
-  --gris-roca: #3a3832;
-  --gris-volcán: #5c5850;
-  --tierra: #7a6548;
-  --cobre: #a0714a;
-  --cobre-claro: #c49a6c;
-  --beige: #e8dcc8;
-  --beige-claro: #f5f0e8;
-  --niebla: rgba(232,220,200,0.08);
-  --blanco-humo: #faf7f2;
-  --negro-volcán: #0d0f0c;
-  --font-titulo: 'Playfair Display', Georgia, serif;
-  --font-poema: 'Cormorant Garamond', Georgia, serif;
-  --font-datos: 'Roboto Mono', monospace;
-  --trans: all 0.6s cubic-bezier(0.16, 1, 0.3, 1);
+  /* Paleta */
+  --negro:       #0c0e0b;
+  --carbon:      #141610;
+  --verde-noche: #1b2d1b;
+  --verde:       #2a4228;
+  --verde-mid:   #3d5c3a;
+  --verde-luz:   #5a7a54;
+  --musgo:       #7a9470;
+  --cobre:       #9e6e45;
+  --cobre-luz:   #c49460;
+  --cobre-suave: #d4aa7a;
+  --tierra:      #7a6245;
+  --beige:       #e8dcc6;
+  --beige-luz:   #f2ece0;
+  --crema:       #faf7f0;
+  --blanco:      #ffffff;
+
+  /* Tipografía */
+  --serif:  'Playfair Display', Georgia, serif;
+  --sans:   'DM Sans', system-ui, sans-serif;
+  --mono:   'Roboto Mono', monospace;
+
+  /* Espaciado */
+  --gap-xs: 0.5rem;
+  --gap-sm: 1rem;
+  --gap-md: 2rem;
+  --gap-lg: 4rem;
+  --gap-xl: 8rem;
+
+  /* Transiciones */
+  --ease:   cubic-bezier(0.16, 1, 0.3, 1);
+  --dur:    0.65s;
 }
 
 *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
-
-html { scroll-behavior: smooth; font-size: 16px; }
+html { scroll-behavior: smooth; }
 
 body {
-  background: var(--negro-volcán);
+  background: var(--carbon);
   color: var(--beige);
-  font-family: var(--font-poema);
+  font-family: var(--sans);
+  font-weight: 300;
   overflow-x: hidden;
-  cursor: default;
+  -webkit-font-smoothing: antialiased;
 }
 
-/* ============================================================
-   FONDO ANIMADO — Niebla sobre rocas (simulado CSS)
-   REEMPLAZAR: <video autoplay muted loop playsinline id="bg-video">
-                <source src="niebla-volcan-hidalgo.mp4" type="video/mp4">
-               </video>
-   ============================================================ */
-.bg-fog {
+/* ---- Utilidades ---- */
+.sr-only { position:absolute; width:1px; height:1px; overflow:hidden; clip:rect(0,0,0,0); }
+
+img { display: block; width: 100%; height: 100%; object-fit: cover; }
+
+.container {
+  width: 100%;
+  max-width: 1180px;
+  margin: 0 auto;
+  padding: 0 1.5rem;
+}
+
+/* Grain overlay para toda la página */
+body::before {
+  content: '';
   position: fixed;
   inset: 0;
-  z-index: 0;
-  background: 
-    radial-gradient(ellipse 120% 60% at 20% 80%, #1a2e1a 0%, transparent 60%),
-    radial-gradient(ellipse 80% 80% at 80% 20%, #2d1a0d 0%, transparent 50%),
-    radial-gradient(ellipse 60% 40% at 50% 50%, #0d1a0d 0%, transparent 70%),
-    linear-gradient(160deg, #0a0f0a 0%, #1a1410 40%, #0f1a0f 100%);
-  overflow: hidden;
-}
-
-.bg-fog::before {
-  content: '';
-  position: absolute;
-  inset: -50%;
-  background: 
-    radial-gradient(ellipse 40% 20% at 30% 60%, rgba(74,103,65,0.15) 0%, transparent 50%),
-    radial-gradient(ellipse 60% 30% at 70% 40%, rgba(45,74,45,0.10) 0%, transparent 60%),
-    radial-gradient(ellipse 30% 40% at 10% 30%, rgba(45,74,45,0.08) 0%, transparent 50%);
-  animation: niebla1 18s ease-in-out infinite alternate;
-}
-
-.bg-fog::after {
-  content: '';
-  position: absolute;
-  inset: -50%;
-  background: 
-    radial-gradient(ellipse 50% 25% at 60% 70%, rgba(160,113,74,0.06) 0%, transparent 50%),
-    radial-gradient(ellipse 40% 20% at 20% 80%, rgba(74,103,65,0.10) 0%, transparent 60%);
-  animation: niebla2 24s ease-in-out infinite alternate;
-}
-
-@keyframes niebla1 {
-  0%   { transform: translate(0%, 0%) scale(1); }
-  33%  { transform: translate(3%, -2%) scale(1.05); }
-  66%  { transform: translate(-2%, 3%) scale(0.98); }
-  100% { transform: translate(4%, -4%) scale(1.03); }
-}
-
-@keyframes niebla2 {
-  0%   { transform: translate(0%, 0%) scale(1); }
-  50%  { transform: translate(-5%, 2%) scale(1.08); }
-  100% { transform: translate(3%, -3%) scale(0.97); }
-}
-
-/* Textura grano sutil */
-.bg-fog-grain {
-  position: fixed;
-  inset: 0;
-  z-index: 1;
-  opacity: 0.035;
-  background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noise'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noise)'/%3E%3C/svg%3E");
-  background-repeat: repeat;
-  background-size: 256px;
+  z-index: 9000;
   pointer-events: none;
+  opacity: 0.028;
+  background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 512 512' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.75' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");
+  background-size: 200px;
 }
 
-/* ============================================================
-   NAVEGACIÓN
-   ============================================================ */
-nav {
+/* ==================================================
+   NAV
+   ================================================== */
+#nav {
   position: fixed;
-  top: 0;
-  left: 0;
-  right: 0;
-  z-index: 100;
-  padding: 1.5rem 3rem;
+  top: 0; left: 0; right: 0;
+  z-index: 8000;
+  padding: 1.4rem 1.5rem;
   display: flex;
   align-items: center;
   justify-content: space-between;
-  transition: var(--trans);
+  transition: background var(--dur) var(--ease),
+              padding var(--dur) var(--ease),
+              border-color var(--dur) var(--ease);
+  border-bottom: 1px solid transparent;
 }
 
-nav.scrolled {
-  background: rgba(13, 15, 12, 0.85);
-  backdrop-filter: blur(20px);
-  -webkit-backdrop-filter: blur(20px);
-  border-bottom: 1px solid rgba(232,220,200,0.06);
-  padding: 1rem 3rem;
+#nav.scrolled {
+  background: rgba(12, 14, 11, 0.9);
+  backdrop-filter: blur(24px);
+  -webkit-backdrop-filter: blur(24px);
+  padding: 0.9rem 1.5rem;
+  border-bottom-color: rgba(232, 220, 198, 0.07);
 }
 
 .nav-logo {
-  font-family: var(--font-titulo);
-  font-size: 1.1rem;
-  letter-spacing: 0.3em;
-  color: var(--beige);
   text-decoration: none;
-  font-weight: 400;
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
 }
 
-.nav-logo span {
-  display: block;
-  font-family: var(--font-datos);
-  font-size: 0.5rem;
-  letter-spacing: 0.25em;
-  color: var(--cobre-claro);
-  margin-top: 2px;
+.nav-logo-nombre {
+  font-family: var(--serif);
+  font-size: 1rem;
+  font-weight: 400;
+  letter-spacing: 0.28em;
+  color: var(--beige-luz);
+}
+
+.nav-logo-sub {
+  font-family: var(--mono);
+  font-size: 0.42rem;
+  letter-spacing: 0.3em;
   text-transform: uppercase;
+  color: var(--cobre-luz);
+}
+
+.nav-right {
+  display: flex;
+  align-items: center;
+  gap: 2rem;
 }
 
 .nav-links {
   display: flex;
-  gap: 2.5rem;
+  gap: 1.8rem;
   list-style: none;
-  align-items: center;
 }
 
 .nav-links a {
-  font-family: var(--font-datos);
-  font-size: 0.65rem;
-  letter-spacing: 0.2em;
-  text-transform: uppercase;
-  color: rgba(232,220,200,0.65);
+  font-family: var(--sans);
+  font-size: 0.78rem;
+  font-weight: 400;
+  color: rgba(232,220,198,0.55);
   text-decoration: none;
+  letter-spacing: 0.04em;
   transition: color 0.3s;
 }
 
-.nav-links a:hover { color: var(--cobre-claro); }
+.nav-links a:hover { color: var(--beige-luz); }
 
-/* Botón Modo Silencio */
-#btn-silencio {
-  font-family: var(--font-datos);
-  font-size: 0.6rem;
-  letter-spacing: 0.2em;
-  text-transform: uppercase;
-  color: rgba(232,220,200,0.5);
-  background: none;
-  border: 1px solid rgba(232,220,200,0.15);
-  padding: 0.4rem 1rem;
+.nav-cta {
+  font-family: var(--sans);
+  font-size: 0.75rem;
+  font-weight: 500;
+  color: var(--verde-noche);
+  background: var(--cobre-suave);
+  padding: 0.5rem 1.3rem;
   border-radius: 50px;
-  cursor: pointer;
-  transition: var(--trans);
+  text-decoration: none;
+  letter-spacing: 0.03em;
+  transition: background 0.3s, transform 0.2s;
+  white-space: nowrap;
 }
 
-#btn-silencio:hover {
-  border-color: rgba(160,113,74,0.5);
-  color: var(--cobre-claro);
+.nav-cta:hover {
+  background: var(--cobre-luz);
+  transform: translateY(-1px);
 }
 
-#btn-silencio.activo {
-  background: rgba(160,113,74,0.1);
-  border-color: rgba(160,113,74,0.4);
-  color: var(--cobre-claro);
-}
-
-/* Modo Silencio — oculta UI */
-body.silencio nav,
-body.silencio .servicios,
-body.silencio .campo-section,
-body.silencio .expediciones,
-body.silencio .precios,
-body.silencio .blog,
-body.silencio .cta,
-body.silencio footer {
-  opacity: 0;
-  pointer-events: none;
-}
-
-body.silencio .hero-contenido { opacity: 0.5; }
-body.silencio .bg-fog { opacity: 0.6; }
-
-/* ============================================================
-   HERO
-   ============================================================ */
-.hero {
-  position: relative;
-  z-index: 10;
-  min-height: 100vh;
+/* WhatsApp flotante */
+#whatsapp-fab {
+  position: fixed;
+  bottom: 1.5rem;
+  right: 1.5rem;
+  z-index: 8000;
+  width: 52px;
+  height: 52px;
+  border-radius: 50%;
+  background: #25D366;
   display: flex;
   align-items: center;
   justify-content: center;
-  text-align: center;
-  padding: 6rem 2rem 4rem;
+  text-decoration: none;
+  box-shadow: 0 4px 20px rgba(37,211,102,0.35);
+  transition: transform 0.3s var(--ease), box-shadow 0.3s;
+}
+
+#whatsapp-fab:hover {
+  transform: scale(1.08) translateY(-2px);
+  box-shadow: 0 8px 30px rgba(37,211,102,0.45);
+}
+
+#whatsapp-fab svg { width: 26px; height: 26px; }
+
+/* Pulso animado */
+#whatsapp-fab::after {
+  content: '';
+  position: absolute;
+  inset: -3px;
+  border-radius: 50%;
+  border: 2px solid rgba(37,211,102,0.4);
+  animation: wa-pulso 2.5s ease-out infinite;
+}
+
+@keyframes wa-pulso {
+  0%   { transform: scale(1); opacity: 0.8; }
+  100% { transform: scale(1.5); opacity: 0; }
+}
+
+/* ==================================================
+   HERO
+   ================================================== */
+.hero {
+  position: relative;
+  min-height: 100svh;
+  display: flex;
+  align-items: center;
   overflow: hidden;
+}
+
+/* Fondo animado niebla volcánica */
+.hero-bg {
+  position: absolute;
+  inset: 0;
+  z-index: 0;
+  /* REEMPLAZAR: <video autoplay muted loop playsinline>
+       <source src="videos/nenemi-hero-niebla.mp4" type="video/mp4">
+     </video>
+     Imagen de respaldo: bosque-niebla-hidalgo-hero.jpg */
+  background:
+    radial-gradient(ellipse 100% 80% at 30% 100%, rgba(27,45,27,0.9) 0%, transparent 55%),
+    radial-gradient(ellipse 70% 60% at 75% 10%,  rgba(45,26,13,0.7) 0%, transparent 50%),
+    radial-gradient(ellipse 50% 50% at 50% 50%,  rgba(12,14,11,0.5) 0%, transparent 70%),
+    linear-gradient(175deg, #0c0e0b 0%, #1b2d1b 45%, #141610 100%);
+}
+
+.hero-bg-fog {
+  position: absolute;
+  inset: -40%;
+  opacity: 0.6;
+  background:
+    radial-gradient(ellipse 60% 30% at 25% 65%, rgba(90,122,84,0.18) 0%, transparent 55%),
+    radial-gradient(ellipse 50% 25% at 70% 35%, rgba(61,92,58,0.12) 0%, transparent 55%),
+    radial-gradient(ellipse 40% 20% at 15% 25%, rgba(61,92,58,0.10) 0%, transparent 50%);
+  animation: hero-niebla 20s ease-in-out infinite alternate;
+}
+
+@keyframes hero-niebla {
+  0%   { transform: translate(0, 0) scale(1); }
+  30%  { transform: translate(3%, -2%) scale(1.04); }
+  60%  { transform: translate(-2%, 4%) scale(0.97); }
+  100% { transform: translate(4%, -3%) scale(1.05); }
 }
 
 .hero-contenido {
-  max-width: 900px;
-  transition: opacity 1s ease;
+  position: relative;
+  z-index: 10;
+  width: 100%;
+  padding: 7rem 1.5rem 5rem;
 }
 
-/* Parallax wrapper */
-.parallax-hero {
-  will-change: transform;
+.hero-inner {
+  max-width: 1180px;
+  margin: 0 auto;
 }
 
-.hero-overline {
-  font-family: var(--font-datos);
-  font-size: 0.6rem;
-  letter-spacing: 0.4em;
-  text-transform: uppercase;
-  color: var(--cobre-claro);
-  margin-bottom: 2rem;
-  display: flex;
+.hero-badge {
+  display: inline-flex;
   align-items: center;
-  justify-content: center;
-  gap: 1rem;
-}
-
-.hero-overline::before,
-.hero-overline::after {
-  content: '';
-  width: 40px;
-  height: 1px;
-  background: rgba(160,113,74,0.5);
-}
-
-.hero-titulo {
-  font-family: var(--font-titulo);
-  font-size: clamp(3rem, 8vw, 7rem);
-  font-weight: 500;
-  line-height: 1.05;
-  letter-spacing: -0.01em;
-  color: var(--beige-claro);
-  margin-bottom: 1.5rem;
-  font-style: italic;
-}
-
-.hero-titulo em {
-  font-style: normal;
-  color: var(--cobre-claro);
-}
-
-.hero-subtitulo {
-  font-family: var(--font-datos);
-  font-size: 0.7rem;
+  gap: 0.5rem;
+  font-family: var(--mono);
+  font-size: 0.6rem;
   letter-spacing: 0.3em;
   text-transform: uppercase;
-  color: rgba(232,220,200,0.55);
-  margin-bottom: 3.5rem;
+  color: var(--cobre-luz);
+  border: 1px solid rgba(196,148,96,0.3);
+  padding: 0.35rem 0.9rem;
+  border-radius: 50px;
+  margin-bottom: 2rem;
+}
+
+.hero-badge::before {
+  content: '';
+  width: 5px; height: 5px;
+  border-radius: 50%;
+  background: var(--cobre-luz);
+  animation: punto-pulso 2s ease-in-out infinite;
+}
+
+@keyframes punto-pulso {
+  0%, 100% { opacity: 1; }
+  50% { opacity: 0.4; }
+}
+
+.hero-h1 {
+  font-family: var(--serif);
+  font-size: clamp(3rem, 7.5vw, 7rem);
+  font-weight: 400;
+  line-height: 1.04;
+  letter-spacing: -0.01em;
+  color: var(--crema);
+  margin-bottom: 1.5rem;
+  max-width: 14ch;
+}
+
+.hero-h1 em {
+  font-style: italic;
+  color: var(--cobre-suave);
 }
 
 .hero-desc {
-  font-family: var(--font-poema);
-  font-size: 1.15rem;
-  line-height: 1.8;
-  color: rgba(232,220,200,0.7);
-  max-width: 560px;
-  margin: 0 auto 3rem;
-  font-style: italic;
+  font-family: var(--sans);
+  font-size: clamp(1rem, 1.5vw, 1.2rem);
+  font-weight: 300;
+  line-height: 1.7;
+  color: rgba(232,220,198,0.72);
+  max-width: 520px;
+  margin-bottom: 2.5rem;
 }
 
-.btn-principal {
-  display: inline-block;
-  font-family: var(--font-datos);
-  font-size: 0.65rem;
-  letter-spacing: 0.25em;
-  text-transform: uppercase;
-  color: var(--beige-claro);
-  background: transparent;
-  border: 1px solid rgba(232,220,200,0.3);
-  padding: 1rem 2.5rem;
+.hero-acciones {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.9rem;
+  align-items: center;
+}
+
+.btn-primario {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.5rem;
+  font-family: var(--sans);
+  font-size: 0.88rem;
+  font-weight: 500;
+  color: var(--negro);
+  background: var(--crema);
+  padding: 0.85rem 2rem;
   border-radius: 50px;
   text-decoration: none;
+  letter-spacing: 0.02em;
+  transition: background 0.3s, transform 0.2s var(--ease);
+  border: none;
   cursor: pointer;
-  transition: var(--trans);
-  position: relative;
-  overflow: hidden;
 }
 
-.btn-principal::before {
-  content: '';
-  position: absolute;
-  inset: 0;
-  background: linear-gradient(135deg, rgba(160,113,74,0.15), rgba(74,103,65,0.15));
-  opacity: 0;
-  transition: opacity 0.4s;
+.btn-primario:hover {
+  background: var(--blanco);
+  transform: translateY(-2px);
 }
 
-.btn-principal:hover {
-  border-color: rgba(196,154,108,0.6);
-  color: var(--cobre-claro);
+.btn-whatsapp {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.6rem;
+  font-family: var(--sans);
+  font-size: 0.88rem;
+  font-weight: 400;
+  color: var(--beige-luz);
+  background: rgba(255,255,255,0.07);
+  border: 1px solid rgba(255,255,255,0.15);
+  padding: 0.85rem 1.8rem;
+  border-radius: 50px;
+  text-decoration: none;
+  letter-spacing: 0.02em;
+  transition: background 0.3s, border-color 0.3s, transform 0.2s var(--ease);
+  cursor: pointer;
 }
 
-.btn-principal:hover::before { opacity: 1; }
+.btn-whatsapp:hover {
+  background: rgba(37,211,102,0.12);
+  border-color: rgba(37,211,102,0.35);
+  color: #7EF5A0;
+  transform: translateY(-2px);
+}
+
+.btn-whatsapp svg { width: 17px; height: 17px; }
+
+/* Stats rápidos hero */
+.hero-stats {
+  display: flex;
+  gap: 2.5rem;
+  margin-top: 4rem;
+  padding-top: 2rem;
+  border-top: 1px solid rgba(232,220,198,0.08);
+}
+
+.hero-stat-num {
+  font-family: var(--serif);
+  font-size: 1.6rem;
+  font-weight: 400;
+  color: var(--crema);
+  margin-bottom: 0.15rem;
+}
+
+.hero-stat-lab {
+  font-family: var(--sans);
+  font-size: 0.72rem;
+  font-weight: 300;
+  color: rgba(232,220,198,0.45);
+  letter-spacing: 0.04em;
+}
 
 /* Scroll indicator */
 .scroll-ind {
   position: absolute;
-  bottom: 2.5rem;
-  left: 50%;
-  transform: translateX(-50%);
+  bottom: 2rem;
+  right: 2.5rem;
+  z-index: 10;
   display: flex;
   flex-direction: column;
   align-items: center;
-  gap: 0.5rem;
-  opacity: 0.4;
-  animation: pulso 2.5s ease-in-out infinite;
+  gap: 0.4rem;
+  opacity: 0.35;
 }
 
 .scroll-ind span {
-  font-family: var(--font-datos);
-  font-size: 0.5rem;
-  letter-spacing: 0.3em;
+  font-family: var(--mono);
+  font-size: 0.48rem;
+  letter-spacing: 0.28em;
   text-transform: uppercase;
   color: var(--beige);
+  writing-mode: vertical-rl;
 }
 
-.scroll-ind-linea {
+.scroll-ind-line {
   width: 1px;
-  height: 50px;
-  background: linear-gradient(to bottom, var(--beige), transparent);
+  height: 48px;
+  background: linear-gradient(to bottom, transparent, var(--beige));
+  animation: scroll-line 1.8s ease-in-out infinite;
 }
 
-@keyframes pulso {
-  0%, 100% { opacity: 0.4; transform: translateX(-50%) translateY(0); }
-  50% { opacity: 0.7; transform: translateX(-50%) translateY(6px); }
+@keyframes scroll-line {
+  0%, 100% { opacity: 0.3; transform: scaleY(0.6); transform-origin: top; }
+  50%       { opacity: 0.8; transform: scaleY(1);   transform-origin: top; }
 }
 
-/* ============================================================
-   SECCIÓN NARRATIVA
-   ============================================================ */
-section { position: relative; z-index: 10; }
+/* ==================================================
+   SECCIÓN: QUÉ ES NENEMI
+   ================================================== */
+.que-es {
+  padding: var(--gap-xl) 0;
+  background: var(--negro);
+}
 
-.narrativa {
-  padding: 8rem 2rem;
-  max-width: 1100px;
-  margin: 0 auto;
+.que-es-grid {
   display: grid;
   grid-template-columns: 1fr 1fr;
-  gap: 6rem;
+  gap: 5rem;
   align-items: center;
 }
 
-.narrativa-texto {
-  /* IMAGEN: Reemplazar con <img src="bosque-hidalgo-niebla.jpg" alt="Bosque de niebla Hidalgo"> */
+/* IMAGEN: reemplazar con foto atmosférica de bosque-niebla real 
+   Resolución sugerida: 900x700px, sin personas, primer plano musgo/roca */
+.que-es-img {
+  position: relative;
+  height: 520px;
+  border-radius: 16px;
+  overflow: hidden;
+  background: linear-gradient(145deg, var(--verde-noche) 0%, var(--verde) 50%, var(--verde-mid) 100%);
 }
 
-.narrativa-poema {
-  font-family: var(--font-poema);
-  font-size: 1.5rem;
-  font-style: italic;
-  line-height: 1.9;
-  color: rgba(232,220,200,0.75);
-  border-left: 1px solid rgba(160,113,74,0.3);
-  padding-left: 2rem;
+.que-es-img-placeholder {
+  position: absolute;
+  inset: 0;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 0.8rem;
+  opacity: 0.2;
 }
 
-.narrativa-poema strong {
-  color: var(--beige-claro);
-  font-style: normal;
-  font-weight: 400;
-}
-
-.narrativa-manifiesto h2 {
-  font-family: var(--font-titulo);
-  font-size: clamp(1.8rem, 3vw, 2.8rem);
-  font-weight: 400;
-  color: var(--beige-claro);
-  margin-bottom: 1.5rem;
-  line-height: 1.3;
-}
-
-.narrativa-manifiesto p {
-  font-family: var(--font-poema);
-  font-size: 1.05rem;
-  line-height: 1.9;
-  color: rgba(232,220,200,0.65);
-  margin-bottom: 1.2rem;
-}
-
-.data-tag {
-  display: inline-block;
-  font-family: var(--font-datos);
-  font-size: 0.55rem;
+.que-es-img-placeholder span {
+  font-family: var(--mono);
+  font-size: 0.6rem;
   letter-spacing: 0.25em;
   text-transform: uppercase;
-  color: var(--cobre-claro);
-  border: 1px solid rgba(160,113,74,0.25);
-  padding: 0.25rem 0.7rem;
-  border-radius: 50px;
-  margin: 0.2rem;
-}
-
-/* ============================================================
-   DATOS DE CAMPO — Mapa SVG interactivo
-   ============================================================ */
-.campo-section {
-  padding: 8rem 2rem;
-  max-width: 1200px;
-  margin: 0 auto;
-}
-
-.seccion-header {
+  color: var(--beige);
   text-align: center;
-  margin-bottom: 4rem;
 }
 
-.seccion-overline {
-  font-family: var(--font-datos);
-  font-size: 0.6rem;
-  letter-spacing: 0.35em;
+/* Decoración sobre imagen */
+.que-es-img::after {
+  content: '';
+  position: absolute;
+  bottom: 0; left: 0; right: 0;
+  height: 200px;
+  background: linear-gradient(to top, rgba(12,14,11,0.7), transparent);
+}
+
+.que-es-badge-img {
+  position: absolute;
+  bottom: 1.5rem;
+  left: 1.5rem;
+  z-index: 2;
+  background: rgba(12,14,11,0.8);
+  backdrop-filter: blur(12px);
+  border: 1px solid rgba(196,148,96,0.25);
+  border-radius: 10px;
+  padding: 0.9rem 1.2rem;
+}
+
+.que-es-badge-img .num {
+  font-family: var(--serif);
+  font-size: 1.6rem;
+  font-weight: 400;
+  color: var(--cobre-suave);
+  line-height: 1;
+}
+
+.que-es-badge-img .lab {
+  font-family: var(--sans);
+  font-size: 0.72rem;
+  color: rgba(232,220,198,0.55);
+  margin-top: 0.2rem;
+}
+
+.label-seccion {
+  font-family: var(--mono);
+  font-size: 0.58rem;
+  letter-spacing: 0.32em;
   text-transform: uppercase;
-  color: var(--cobre-claro);
+  color: var(--cobre-luz);
+  margin-bottom: 1rem;
+  display: flex;
+  align-items: center;
+  gap: 0.6rem;
+}
+
+.label-seccion::before {
+  content: '';
+  width: 28px; height: 1px;
+  background: var(--cobre);
+}
+
+.seccion-h2 {
+  font-family: var(--serif);
+  font-size: clamp(2rem, 3.5vw, 3rem);
+  font-weight: 400;
+  line-height: 1.18;
+  color: var(--crema);
+  margin-bottom: 1.5rem;
+}
+
+.seccion-h2 em { font-style: italic; color: var(--cobre-suave); }
+
+.seccion-p {
+  font-family: var(--sans);
+  font-size: 1rem;
+  font-weight: 300;
+  line-height: 1.78;
+  color: rgba(232,220,198,0.65);
   margin-bottom: 1rem;
 }
 
-.seccion-titulo {
-  font-family: var(--font-titulo);
-  font-size: clamp(2rem, 4vw, 3.5rem);
-  font-weight: 400;
+.destaque-texto {
+  font-family: var(--serif);
+  font-size: 1.15rem;
   font-style: italic;
-  color: var(--beige-claro);
-  margin-bottom: 0.8rem;
+  color: var(--beige);
+  border-left: 2px solid var(--cobre);
+  padding-left: 1.2rem;
+  margin: 1.8rem 0;
+  line-height: 1.6;
 }
 
-.seccion-desc {
-  font-family: var(--font-poema);
-  font-size: 1rem;
-  color: rgba(232,220,200,0.55);
-  max-width: 480px;
-  margin: 0 auto;
-  font-style: italic;
+/* ==================================================
+   SECCIÓN: BENEFICIOS (4 tarjetas)
+   ================================================== */
+.beneficios {
+  padding: var(--gap-xl) 0;
+  background: var(--verde-noche);
 }
 
-.mapa-wrapper {
-  position: relative;
-  background: rgba(26, 46, 26, 0.25);
-  border: 1px solid rgba(232,220,200,0.07);
+.beneficios-grid {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 1.5rem;
+  margin-top: 3.5rem;
+}
+
+.beneficio-card {
+  background: rgba(255,255,255,0.04);
+  border: 1px solid rgba(255,255,255,0.07);
   border-radius: 16px;
-  overflow: visible;
-  padding: 2rem;
-  backdrop-filter: blur(4px);
-  -webkit-backdrop-filter: blur(4px);
+  padding: 2rem 1.6rem;
+  transition: transform var(--dur) var(--ease),
+              border-color var(--dur) var(--ease),
+              background var(--dur) var(--ease);
 }
 
-/* IMAGEN MAPA: Reemplazar con imagen satelital o topográfica de Hidalgo */
-.mapa-svg-container {
-  position: relative;
+.beneficio-card:hover {
+  transform: translateY(-5px);
+  border-color: rgba(196,148,96,0.22);
+  background: rgba(255,255,255,0.07);
 }
 
-#mapa-territorio {
-  width: 100%;
-  border-radius: 12px;
-  display: block;
+.beneficio-icono {
+  width: 42px;
+  height: 42px;
+  margin-bottom: 1.3rem;
 }
 
-/* Puntos del mapa */
-.punto-mapa {
-  cursor: pointer;
-  transition: var(--trans);
-}
-
-.punto-mapa circle.outer {
-  fill: none;
-  stroke: var(--cobre-claro);
-  stroke-width: 1;
-  opacity: 0;
-  animation: pulso-anillo 2.5s ease-out infinite;
-}
-
-.punto-mapa circle.inner {
-  fill: var(--cobre-claro);
-  stroke: rgba(232,220,200,0.3);
-  stroke-width: 1;
-  transition: r 0.3s ease, fill 0.3s;
-}
-
-.punto-mapa:hover circle.inner { fill: var(--beige-claro); r: 7; }
-.punto-mapa:hover circle.outer { opacity: 0.4; }
-
-@keyframes pulso-anillo {
-  0% { r: 6; opacity: 0.6; }
-  100% { r: 20; opacity: 0; }
-}
-
-/* Tarjetas flotantes */
-.tarjeta-campo {
-  position: absolute;
-  background: rgba(13,15,12,0.92);
-  border: 1px solid rgba(160,113,74,0.3);
-  border-radius: 12px;
-  padding: 1.4rem 1.6rem;
-  width: 260px;
-  backdrop-filter: blur(20px);
-  -webkit-backdrop-filter: blur(20px);
-  z-index: 50;
-  opacity: 0;
-  pointer-events: none;
-  transform: translateY(8px) scale(0.97);
-  transition: opacity 0.4s ease, transform 0.4s cubic-bezier(0.16, 1, 0.3, 1);
-  box-shadow: 0 20px 60px rgba(0,0,0,0.5);
-}
-
-.tarjeta-campo.visible {
-  opacity: 1;
-  pointer-events: all;
-  transform: translateY(0) scale(1);
-}
-
-.tarjeta-campo-cierre {
-  position: absolute;
-  top: 0.6rem;
-  right: 0.8rem;
-  background: none;
-  border: none;
-  color: rgba(232,220,200,0.4);
-  cursor: pointer;
-  font-size: 1rem;
-  line-height: 1;
-  transition: color 0.2s;
-}
-
-.tarjeta-campo-cierre:hover { color: var(--beige-claro); }
-
-.tarjeta-campo-zona {
-  font-family: var(--font-datos);
-  font-size: 0.5rem;
-  letter-spacing: 0.3em;
-  text-transform: uppercase;
-  color: var(--cobre-claro);
+.beneficio-titulo {
+  font-family: var(--serif);
+  font-size: 1.2rem;
+  font-weight: 400;
+  color: var(--crema);
   margin-bottom: 0.6rem;
 }
 
-.tarjeta-campo h4 {
-  font-family: var(--font-titulo);
-  font-size: 1.1rem;
-  font-weight: 500;
-  color: var(--beige-claro);
-  margin-bottom: 1rem;
-  font-style: italic;
+.beneficio-desc {
+  font-family: var(--sans);
+  font-size: 0.88rem;
+  font-weight: 300;
+  line-height: 1.7;
+  color: rgba(232,220,198,0.55);
 }
 
-.tarjeta-dato {
+/* ==================================================
+   SECCIÓN: EXPERIENCIAS (4 expediciones)
+   ================================================== */
+.expediciones {
+  padding: var(--gap-xl) 0;
+  background: var(--negro);
+}
+
+.exp-tabs {
   display: flex;
-  justify-content: space-between;
-  align-items: baseline;
-  padding: 0.4rem 0;
-  border-bottom: 1px solid rgba(232,220,200,0.07);
+  gap: 0.5rem;
+  margin-bottom: 3rem;
+  overflow-x: auto;
+  padding-bottom: 0.25rem;
+  scrollbar-width: none;
+}
+
+.exp-tabs::-webkit-scrollbar { display: none; }
+
+.exp-tab {
+  font-family: var(--sans);
+  font-size: 0.8rem;
+  font-weight: 400;
+  color: rgba(232,220,198,0.45);
+  background: none;
+  border: 1px solid rgba(255,255,255,0.08);
+  border-radius: 50px;
+  padding: 0.5rem 1.2rem;
+  cursor: pointer;
+  white-space: nowrap;
+  transition: all 0.3s;
+}
+
+.exp-tab.activo,
+.exp-tab:hover {
+  color: var(--crema);
+  border-color: rgba(196,148,96,0.35);
+  background: rgba(196,148,96,0.08);
+}
+
+.exp-tab.activo {
+  background: rgba(196,148,96,0.14);
+}
+
+/* Cards de expedición */
+.exp-card {
+  display: none;
+  grid-template-columns: 1fr 1fr;
+  gap: 3.5rem;
+  align-items: center;
+}
+
+.exp-card.activa { display: grid; }
+
+/* IMAGEN expedición: Reemplazar con foto de alta resolución de cada ruta
+   exp-01: bosque mesófilo / niebla sobre árboles
+   exp-02: Peña del Cuervo / formación rocosa
+   exp-03: paisaje cultural / comunidad y montaña
+   exp-04: niebla densa / sendero boscoso Omitlán */
+.exp-card-img {
+  position: relative;
+  height: 500px;
+  border-radius: 20px;
+  overflow: hidden;
+  background: linear-gradient(145deg, var(--verde-noche), var(--verde-mid));
+}
+
+.exp-card-img-placeholder {
+  position: absolute;
+  inset: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-family: var(--mono);
+  font-size: 0.6rem;
+  letter-spacing: 0.2em;
+  text-transform: uppercase;
+  color: rgba(232,220,198,0.2);
+  flex-direction: column;
   gap: 0.5rem;
 }
 
-.tarjeta-dato:last-child { border-bottom: none; }
-
-.tarjeta-dato-label {
-  font-family: var(--font-datos);
-  font-size: 0.55rem;
-  letter-spacing: 0.1em;
-  text-transform: uppercase;
-  color: rgba(232,220,200,0.45);
-  flex-shrink: 0;
+/* Galería miniaturas */
+.exp-miniaturas {
+  position: absolute;
+  bottom: 1rem;
+  left: 1rem;
+  right: 1rem;
+  display: flex;
+  gap: 0.5rem;
+  z-index: 2;
 }
 
-.tarjeta-dato-valor {
-  font-family: var(--font-datos);
-  font-size: 0.7rem;
-  color: var(--beige-claro);
-  text-align: right;
-}
-
-/* ============================================================
-   EXPEDICIONES (Servicios)
-   ============================================================ */
-.expediciones {
-  padding: 8rem 2rem;
-}
-
-.expediciones-grid {
-  max-width: 1100px;
-  margin: 4rem auto 0;
-  display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
-  gap: 1.5rem;
-}
-
-.expedicion-card {
-  background: rgba(26,46,26,0.2);
-  border: 1px solid rgba(232,220,200,0.07);
-  border-radius: 16px;
-  padding: 2.5rem 2rem;
-  transition: var(--trans);
-  cursor: pointer;
-  position: relative;
+.exp-miniatura {
+  flex: 1;
+  height: 56px;
+  border-radius: 8px;
   overflow: hidden;
+  border: 1px solid rgba(255,255,255,0.12);
+  cursor: pointer;
+  background: rgba(255,255,255,0.08);
+  transition: border-color 0.2s, transform 0.2s;
 }
 
-.expedicion-card::before {
+.exp-miniatura:hover {
+  border-color: var(--cobre-luz);
+  transform: scaleY(1.03);
+}
+
+/* Gradiente sobre imagen */
+.exp-card-img::after {
   content: '';
   position: absolute;
   inset: 0;
-  background: linear-gradient(135deg, rgba(74,103,65,0.15), rgba(160,113,74,0.08));
-  opacity: 0;
-  transition: opacity 0.4s;
-  border-radius: 16px;
+  background: linear-gradient(
+    to top,
+    rgba(12,14,11,0.65) 0%,
+    transparent 50%
+  );
 }
 
-.expedicion-card::after {
-  content: '';
-  position: absolute;
-  bottom: 0;
-  left: 0;
-  right: 0;
-  height: 2px;
-  background: linear-gradient(90deg, transparent, var(--cobre-claro), transparent);
-  opacity: 0;
-  transition: opacity 0.4s;
-}
-
-.expedicion-card:hover { 
-  border-color: rgba(160,113,74,0.25);
-  transform: translateY(-4px);
-}
-
-.expedicion-card:hover::before,
-.expedicion-card:hover::after { opacity: 1; }
-
-.exp-icono {
-  width: 40px;
-  height: 40px;
-  margin-bottom: 1.5rem;
-  opacity: 0.6;
-  transition: opacity 0.4s;
-}
-
-.expedicion-card:hover .exp-icono { opacity: 1; }
-
-.exp-num {
-  font-family: var(--font-datos);
-  font-size: 0.5rem;
-  letter-spacing: 0.3em;
-  color: var(--cobre-claro);
-  margin-bottom: 0.8rem;
-}
-
-.exp-titulo {
-  font-family: var(--font-titulo);
-  font-size: 1.4rem;
-  font-weight: 500;
-  font-style: italic;
-  color: var(--beige-claro);
-  margin-bottom: 0.8rem;
-}
-
-.exp-desc {
-  font-family: var(--font-poema);
-  font-size: 0.95rem;
-  line-height: 1.7;
-  color: rgba(232,220,200,0.6);
-  font-style: italic;
-}
-
-.exp-tags {
-  margin-top: 1.5rem;
-  display: flex;
-  flex-wrap: wrap;
-  gap: 0.4rem;
-}
-
-.exp-tag {
-  font-family: var(--font-datos);
-  font-size: 0.5rem;
-  letter-spacing: 0.15em;
-  text-transform: uppercase;
-  color: rgba(196,154,108,0.7);
-  border: 1px solid rgba(196,154,108,0.2);
-  padding: 0.2rem 0.6rem;
-  border-radius: 50px;
-}
-
-/* ============================================================
-   BLOG CIENTÍFICO
-   ============================================================ */
-.blog {
-  padding: 8rem 2rem;
-  background: rgba(26,46,26,0.12);
-}
-
-.blog-grid {
-  max-width: 1100px;
-  margin: 4rem auto 0;
-  display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
-  gap: 2rem;
-}
-
-.blog-card {
-  border: 1px solid rgba(232,220,200,0.07);
-  border-radius: 16px;
-  overflow: hidden;
-  transition: var(--trans);
-  cursor: pointer;
-}
-
-.blog-card:hover {
-  border-color: rgba(160,113,74,0.2);
-  transform: translateY(-3px);
-}
-
-/* IMAGEN: Reemplazar .blog-imagen con <img src="..."> */
-.blog-imagen {
-  height: 200px;
-  background: linear-gradient(135deg, var(--verde-profundo), var(--gris-roca));
-  position: relative;
-  overflow: hidden;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-}
-
-.blog-imagen-placeholder {
-  font-family: var(--font-datos);
-  font-size: 0.55rem;
-  letter-spacing: 0.2em;
-  color: rgba(232,220,200,0.2);
-  text-transform: uppercase;
-  text-align: center;
-}
-
-.blog-imagen-cat {
+/* Badge flotante en imagen */
+.exp-img-badge {
   position: absolute;
   top: 1rem;
   left: 1rem;
-  font-family: var(--font-datos);
-  font-size: 0.5rem;
-  letter-spacing: 0.2em;
-  text-transform: uppercase;
-  background: rgba(13,15,12,0.7);
-  color: var(--cobre-claro);
-  border: 1px solid rgba(160,113,74,0.3);
-  padding: 0.25rem 0.6rem;
-  border-radius: 50px;
+  z-index: 3;
+  background: rgba(12,14,11,0.75);
   backdrop-filter: blur(10px);
+  border: 1px solid rgba(196,148,96,0.22);
+  border-radius: 8px;
+  padding: 0.5rem 0.8rem;
 }
 
-.blog-cuerpo {
-  padding: 1.5rem;
-  background: rgba(13,15,12,0.4);
-  backdrop-filter: blur(4px);
-}
-
-.blog-fecha {
-  font-family: var(--font-datos);
-  font-size: 0.55rem;
-  letter-spacing: 0.2em;
-  color: rgba(232,220,200,0.35);
-  margin-bottom: 0.6rem;
-}
-
-.blog-titulo {
-  font-family: var(--font-titulo);
-  font-size: 1.15rem;
-  font-weight: 400;
-  font-style: italic;
-  color: var(--beige-claro);
-  margin-bottom: 0.6rem;
-  line-height: 1.4;
-}
-
-.blog-extracto {
-  font-family: var(--font-poema);
-  font-size: 0.9rem;
-  line-height: 1.7;
-  color: rgba(232,220,200,0.55);
-  font-style: italic;
-}
-
-/* ============================================================
-   PRECIOS
-   ============================================================ */
-.precios {
-  padding: 8rem 2rem;
-}
-
-.precios-grid {
-  max-width: 1000px;
-  margin: 4rem auto 0;
-  display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
-  gap: 1.5rem;
-  align-items: stretch;
-}
-
-.precio-card {
-  border: 1px solid rgba(232,220,200,0.08);
-  border-radius: 20px;
-  padding: 2.5rem 2rem;
-  position: relative;
-  transition: var(--trans);
-  display: flex;
-  flex-direction: column;
-}
-
-.precio-card.destacado {
-  border-color: rgba(160,113,74,0.35);
-  background: rgba(160,113,74,0.05);
-}
-
-.precio-destaque-label {
-  position: absolute;
-  top: -0.7rem;
-  left: 50%;
-  transform: translateX(-50%);
-  font-family: var(--font-datos);
+.exp-img-badge-num {
+  font-family: var(--mono);
   font-size: 0.5rem;
   letter-spacing: 0.25em;
-  text-transform: uppercase;
-  background: var(--cobre);
-  color: var(--beige-claro);
-  padding: 0.3rem 1rem;
-  border-radius: 50px;
-  white-space: nowrap;
+  color: var(--cobre-luz);
 }
 
-.precio-nivel {
-  font-family: var(--font-datos);
-  font-size: 0.55rem;
-  letter-spacing: 0.35em;
-  text-transform: uppercase;
-  color: var(--cobre-claro);
-  margin-bottom: 0.8rem;
-}
+.exp-card-info {}
 
-.precio-titulo {
-  font-family: var(--font-titulo);
-  font-size: 1.6rem;
-  font-weight: 400;
-  font-style: italic;
-  color: var(--beige-claro);
-  margin-bottom: 1.5rem;
-}
-
-.precio-valor {
-  margin-bottom: 2rem;
-}
-
-.precio-desde {
-  font-family: var(--font-datos);
-  font-size: 0.55rem;
-  letter-spacing: 0.15em;
-  color: rgba(232,220,200,0.4);
-  margin-bottom: 0.3rem;
-}
-
-.precio-monto {
-  font-family: var(--font-titulo);
-  font-size: 2.5rem;
-  font-weight: 500;
-  color: var(--beige-claro);
-}
-
-.precio-monto sup {
-  font-size: 1rem;
-  vertical-align: super;
-  font-weight: 400;
-}
-
-.precio-monto span {
-  font-size: 0.9rem;
-  font-family: var(--font-datos);
-  color: rgba(232,220,200,0.5);
-  font-weight: 300;
-}
-
-.precio-divisor {
-  height: 1px;
-  background: rgba(232,220,200,0.07);
-  margin: 1.5rem 0;
-}
-
-.precio-incluye {
-  list-style: none;
-  flex: 1;
-}
-
-.precio-incluye li {
-  font-family: var(--font-poema);
-  font-size: 0.9rem;
-  color: rgba(232,220,200,0.65);
-  padding: 0.45rem 0;
-  display: flex;
-  align-items: flex-start;
-  gap: 0.7rem;
-  border-bottom: 1px solid rgba(232,220,200,0.05);
-}
-
-.precio-incluye li:last-child { border-bottom: none; }
-
-.precio-incluye li::before {
-  content: '—';
-  color: var(--cobre-claro);
-  font-family: var(--font-datos);
-  font-size: 0.7rem;
-  flex-shrink: 0;
-  margin-top: 2px;
-}
-
-.precio-btn {
-  display: block;
-  margin-top: 2rem;
-  font-family: var(--font-datos);
-  font-size: 0.6rem;
-  letter-spacing: 0.2em;
-  text-transform: uppercase;
-  text-align: center;
-  color: var(--beige-claro);
-  border: 1px solid rgba(232,220,200,0.2);
-  padding: 0.9rem 1.5rem;
-  border-radius: 50px;
-  text-decoration: none;
-  cursor: pointer;
-  background: none;
-  width: 100%;
-  transition: var(--trans);
-}
-
-.precio-btn:hover {
-  border-color: rgba(160,113,74,0.5);
-  background: rgba(160,113,74,0.08);
-  color: var(--cobre-claro);
-}
-
-.precio-card.destacado .precio-btn {
-  background: rgba(160,113,74,0.2);
-  border-color: rgba(196,154,108,0.4);
-}
-
-/* ============================================================
-   CTA — FORMULARIO
-   ============================================================ */
-.cta {
-  padding: 8rem 2rem;
-  background: rgba(26,46,26,0.15);
-}
-
-.cta-inner {
-  max-width: 700px;
-  margin: 0 auto;
-  text-align: center;
-}
-
-.cta-inner p {
-  font-family: var(--font-poema);
-  font-size: 1.05rem;
-  font-style: italic;
-  color: rgba(232,220,200,0.6);
-  margin-bottom: 3rem;
-  line-height: 1.8;
-}
-
-.form-nenemi {
-  display: grid;
-  grid-template-columns: 1fr 1fr;
-  gap: 1rem;
-  text-align: left;
-}
-
-.form-grupo {
-  display: flex;
-  flex-direction: column;
+.exp-dificultad {
+  display: inline-flex;
+  align-items: center;
   gap: 0.4rem;
-}
-
-.form-grupo.ancho-completo {
-  grid-column: 1 / -1;
-}
-
-.form-label {
-  font-family: var(--font-datos);
-  font-size: 0.55rem;
-  letter-spacing: 0.25em;
+  font-family: var(--mono);
+  font-size: 0.58rem;
+  letter-spacing: 0.22em;
   text-transform: uppercase;
-  color: rgba(232,220,200,0.45);
+  color: var(--cobre-luz);
+  margin-bottom: 1.2rem;
 }
 
-.form-input, .form-select, .form-textarea {
-  background: rgba(232,220,200,0.04);
-  border: 1px solid rgba(232,220,200,0.1);
-  border-radius: 10px;
-  padding: 0.8rem 1rem;
-  color: var(--beige-claro);
-  font-family: var(--font-poema);
-  font-size: 0.95rem;
-  transition: border-color 0.3s;
-  outline: none;
-  width: 100%;
-}
-
-.form-input:focus, .form-select:focus, .form-textarea:focus {
-  border-color: rgba(160,113,74,0.4);
-}
-
-.form-select {
-  appearance: none;
-  cursor: pointer;
-}
-
-.form-select option {
-  background: var(--verde-profundo);
-  color: var(--beige-claro);
-}
-
-.form-textarea {
-  resize: vertical;
-  min-height: 100px;
-  font-style: italic;
-}
-
-/* Calendario visual simplificado */
-.calendario-mini {
-  grid-column: 1 / -1;
-  background: rgba(232,220,200,0.03);
-  border: 1px solid rgba(232,220,200,0.08);
-  border-radius: 12px;
-  padding: 1.5rem;
-}
-
-.cal-header {
+.exp-dots {
   display: flex;
-  justify-content: space-between;
-  align-items: center;
-  margin-bottom: 1rem;
-}
-
-.cal-mes {
-  font-family: var(--font-titulo);
-  font-size: 1rem;
-  font-style: italic;
-  color: var(--beige-claro);
-}
-
-.cal-nav {
-  background: none;
-  border: 1px solid rgba(232,220,200,0.12);
-  border-radius: 50%;
-  width: 28px;
-  height: 28px;
-  color: rgba(232,220,200,0.5);
-  cursor: pointer;
-  font-size: 0.8rem;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  transition: all 0.2s;
-}
-
-.cal-nav:hover { border-color: rgba(160,113,74,0.4); color: var(--cobre-claro); }
-
-.cal-dias-header {
-  display: grid;
-  grid-template-columns: repeat(7, 1fr);
-  margin-bottom: 0.5rem;
-}
-
-.cal-dia-letra {
-  font-family: var(--font-datos);
-  font-size: 0.5rem;
-  letter-spacing: 0.1em;
-  text-align: center;
-  color: rgba(232,220,200,0.3);
-  padding: 0.3rem 0;
-}
-
-.cal-grid {
-  display: grid;
-  grid-template-columns: repeat(7, 1fr);
   gap: 3px;
 }
 
-.cal-celda {
-  aspect-ratio: 1;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  font-family: var(--font-datos);
-  font-size: 0.7rem;
-  color: rgba(232,220,200,0.45);
-  border-radius: 6px;
-  cursor: pointer;
-  transition: all 0.2s;
-  border: 1px solid transparent;
+.exp-dot {
+  width: 7px; height: 7px;
+  border-radius: 50%;
+  background: var(--cobre);
 }
 
-.cal-celda:hover:not(.vacio):not(.pasado) {
-  background: rgba(160,113,74,0.15);
-  border-color: rgba(160,113,74,0.3);
-  color: var(--cobre-claro);
+.exp-dot.vacio { background: rgba(196,148,96,0.2); }
+
+.exp-h3 {
+  font-family: var(--serif);
+  font-size: clamp(1.7rem, 2.8vw, 2.4rem);
+  font-weight: 400;
+  line-height: 1.2;
+  color: var(--crema);
+  margin-bottom: 0.5rem;
 }
 
-.cal-celda.seleccionado {
-  background: rgba(160,113,74,0.25);
-  border-color: rgba(196,154,108,0.5);
-  color: var(--beige-claro);
+.exp-tagline {
+  font-family: var(--serif);
+  font-style: italic;
+  font-size: 1rem;
+  color: var(--cobre-suave);
+  margin-bottom: 1.3rem;
 }
 
-.cal-celda.disponible { color: rgba(232,220,200,0.7); }
-.cal-celda.pasado { opacity: 0.2; cursor: default; }
-.cal-celda.vacio { cursor: default; }
-.cal-celda.expedicion { 
-  color: var(--cobre-claro); 
-  border-color: rgba(160,113,74,0.2);
-  background: rgba(160,113,74,0.06);
+.exp-desc {
+  font-family: var(--sans);
+  font-size: 0.95rem;
+  font-weight: 300;
+  line-height: 1.78;
+  color: rgba(232,220,198,0.62);
+  margin-bottom: 1.8rem;
 }
 
-.cal-leyenda {
-  display: flex;
-  gap: 1.5rem;
-  margin-top: 1rem;
-  justify-content: center;
-}
-
-.cal-leyenda-item {
+.exp-publico {
+  font-family: var(--sans);
+  font-size: 0.8rem;
+  color: rgba(232,220,198,0.5);
+  margin-bottom: 1.5rem;
   display: flex;
   align-items: center;
   gap: 0.4rem;
-  font-family: var(--font-datos);
+}
+
+.exp-publico strong { color: var(--beige); font-weight: 400; }
+
+/* Iconos de lo que incluye */
+.exp-incluye {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 0.6rem;
+  margin-bottom: 2rem;
+}
+
+.exp-item {
+  display: flex;
+  align-items: flex-start;
+  gap: 0.5rem;
+  font-family: var(--sans);
+  font-size: 0.82rem;
+  font-weight: 300;
+  color: rgba(232,220,198,0.6);
+  line-height: 1.4;
+}
+
+.exp-item-icon {
+  width: 16px;
+  height: 16px;
+  flex-shrink: 0;
+  margin-top: 1px;
+  color: var(--cobre-luz);
+}
+
+/* Meta datos (duración, nivel, terreno) */
+.exp-meta {
+  display: flex;
+  gap: 1.5rem;
+  padding: 1rem 0;
+  border-top: 1px solid rgba(255,255,255,0.06);
+  border-bottom: 1px solid rgba(255,255,255,0.06);
+  margin-bottom: 1.8rem;
+}
+
+.exp-meta-item {
+  display: flex;
+  flex-direction: column;
+  gap: 0.2rem;
+}
+
+.exp-meta-label {
+  font-family: var(--mono);
   font-size: 0.5rem;
-  letter-spacing: 0.1em;
-  color: rgba(232,220,200,0.4);
-}
-
-.cal-leyenda-dot {
-  width: 6px;
-  height: 6px;
-  border-radius: 50%;
-  border: 1px solid rgba(160,113,74,0.5);
-  background: rgba(160,113,74,0.15);
-}
-
-.form-submit {
-  grid-column: 1 / -1;
-  font-family: var(--font-datos);
-  font-size: 0.65rem;
-  letter-spacing: 0.25em;
+  letter-spacing: 0.22em;
   text-transform: uppercase;
-  color: var(--beige-claro);
-  background: rgba(74,103,65,0.25);
-  border: 1px solid rgba(74,103,65,0.4);
+  color: rgba(232,220,198,0.35);
+}
+
+.exp-meta-valor {
+  font-family: var(--sans);
+  font-size: 0.88rem;
+  color: var(--beige);
+}
+
+.btn-exp-reservar {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.5rem;
+  font-family: var(--sans);
+  font-size: 0.88rem;
+  font-weight: 500;
+  color: var(--negro);
+  background: var(--crema);
+  padding: 0.85rem 2rem;
   border-radius: 50px;
-  padding: 1rem 2rem;
+  text-decoration: none;
+  border: none;
   cursor: pointer;
-  transition: var(--trans);
-  margin-top: 0.5rem;
+  transition: background 0.3s, transform 0.2s;
 }
 
-.form-submit:hover {
-  background: rgba(74,103,65,0.4);
-  border-color: rgba(74,103,65,0.6);
+.btn-exp-reservar:hover {
+  background: var(--blanco);
+  transform: translateY(-2px);
 }
 
-/* ============================================================
-   FOOTER
-   ============================================================ */
-footer {
+/* Arrow right icon inline */
+.arrow-r {
+  width: 15px;
+  height: 15px;
+  stroke: currentColor;
+  stroke-width: 2;
+  fill: none;
+}
+
+/* ==================================================
+   SECCIÓN: KIT CIENTÍFICO NIÑOS
+   ================================================== */
+.kit-ninos {
+  padding: var(--gap-xl) 0;
+  background: linear-gradient(180deg, var(--negro) 0%, var(--verde-noche) 100%);
+}
+
+.kit-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 5rem;
+  align-items: center;
+}
+
+.kit-info {}
+
+.kit-items {
+  margin-top: 2rem;
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 1rem;
+}
+
+.kit-item {
+  background: rgba(255,255,255,0.04);
+  border: 1px solid rgba(255,255,255,0.07);
+  border-radius: 14px;
+  padding: 1.3rem;
+  transition: border-color 0.3s, transform 0.3s;
+}
+
+.kit-item:hover {
+  border-color: rgba(196,148,96,0.2);
+  transform: translateY(-3px);
+}
+
+.kit-item-emoji {
+  font-size: 1.4rem;
+  margin-bottom: 0.5rem;
+}
+
+.kit-item-titulo {
+  font-family: var(--sans);
+  font-size: 0.88rem;
+  font-weight: 500;
+  color: var(--crema);
+  margin-bottom: 0.25rem;
+}
+
+.kit-item-desc {
+  font-family: var(--sans);
+  font-size: 0.78rem;
+  font-weight: 300;
+  line-height: 1.5;
+  color: rgba(232,220,198,0.5);
+}
+
+/* IMAGEN kit: reemplazar con foto de niños con lupa en bosque, 
+   o composición flat lay del kit sobre madera/musgo */
+.kit-img {
   position: relative;
-  z-index: 10;
-  padding: 4rem 3rem 2rem;
-  border-top: 1px solid rgba(232,220,200,0.06);
-  max-width: 1200px;
-  margin: 0 auto;
+  height: 460px;
+  border-radius: 20px;
+  overflow: hidden;
+  background: linear-gradient(145deg, var(--verde) 0%, var(--verde-noche) 100%);
+}
+
+.kit-img-float {
+  position: absolute;
+  bottom: 1.5rem;
+  right: 1.5rem;
+  background: rgba(12,14,11,0.85);
+  backdrop-filter: blur(10px);
+  border: 1px solid rgba(196,148,96,0.25);
+  border-radius: 12px;
+  padding: 1rem 1.3rem;
+  z-index: 2;
+}
+
+.kit-img-float .label {
+  font-family: var(--mono);
+  font-size: 0.52rem;
+  letter-spacing: 0.22em;
+  text-transform: uppercase;
+  color: var(--cobre-luz);
+  margin-bottom: 0.3rem;
+}
+
+.kit-img-float .texto {
+  font-family: var(--serif);
+  font-size: 1rem;
+  font-style: italic;
+  color: var(--crema);
+}
+
+/* ==================================================
+   SECCIÓN: QUÉ INCLUYE (checklist)
+   ================================================== */
+.incluye {
+  padding: var(--gap-xl) 0;
+  background: var(--verde-noche);
+}
+
+.incluye-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 3.5rem;
+  align-items: start;
+  margin-top: 3rem;
+}
+
+.incluye-lista {
+  display: flex;
+  flex-direction: column;
+  gap: 0.8rem;
+}
+
+.incluye-item {
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+  padding: 1rem 1.2rem;
+  background: rgba(255,255,255,0.04);
+  border: 1px solid rgba(255,255,255,0.06);
+  border-radius: 12px;
+  transition: border-color 0.3s, background 0.3s;
+}
+
+.incluye-item:hover {
+  background: rgba(255,255,255,0.07);
+  border-color: rgba(196,148,96,0.15);
+}
+
+.incluye-check {
+  width: 20px;
+  height: 20px;
+  border-radius: 50%;
+  background: rgba(90,122,84,0.25);
+  border: 1px solid rgba(90,122,84,0.4);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+}
+
+.incluye-check svg {
+  width: 10px;
+  height: 10px;
+  stroke: var(--musgo);
+  stroke-width: 2.5;
+  fill: none;
+}
+
+.incluye-texto {
+  font-family: var(--sans);
+  font-size: 0.93rem;
+  font-weight: 300;
+  color: rgba(232,220,198,0.72);
+}
+
+.incluye-texto strong {
+  color: var(--crema);
+  font-weight: 500;
+}
+
+.alimentacion-box {
+  background: rgba(255,255,255,0.04);
+  border: 1px solid rgba(255,255,255,0.07);
+  border-radius: 20px;
+  padding: 2rem;
+}
+
+.alimentacion-titulo {
+  font-family: var(--serif);
+  font-size: 1.3rem;
+  color: var(--crema);
+  margin-bottom: 0.5rem;
+}
+
+.alimentacion-sub {
+  font-family: var(--sans);
+  font-size: 0.85rem;
+  color: rgba(232,220,198,0.5);
+  margin-bottom: 1.5rem;
+  line-height: 1.5;
+}
+
+.alimentacion-items {
+  display: flex;
+  flex-direction: column;
+  gap: 0.6rem;
+  margin-bottom: 1.5rem;
+}
+
+.alim-item {
+  display: flex;
+  align-items: center;
+  gap: 0.8rem;
+  font-family: var(--sans);
+  font-size: 0.87rem;
+  color: rgba(232,220,198,0.65);
+}
+
+.alim-emoji { font-size: 1.1rem; }
+
+.dietas {
+  display: flex;
+  gap: 0.5rem;
+  flex-wrap: wrap;
+  padding-top: 1rem;
+  border-top: 1px solid rgba(255,255,255,0.06);
+}
+
+.dieta-tag {
+  font-family: var(--mono);
+  font-size: 0.52rem;
+  letter-spacing: 0.15em;
+  text-transform: uppercase;
+  color: rgba(90,122,84,0.9);
+  border: 1px solid rgba(90,122,84,0.3);
+  background: rgba(90,122,84,0.08);
+  padding: 0.25rem 0.7rem;
+  border-radius: 50px;
+}
+
+/* ==================================================
+   SECCIÓN: TESTIMONIOS
+   ================================================== */
+.testimonios {
+  padding: var(--gap-xl) 0;
+  background: var(--negro);
+  overflow: hidden;
+}
+
+.test-grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 1.5rem;
+  margin-top: 3.5rem;
+}
+
+.test-card {
+  background: rgba(255,255,255,0.04);
+  border: 1px solid rgba(255,255,255,0.07);
+  border-radius: 16px;
+  padding: 2rem;
+  transition: transform var(--dur) var(--ease), border-color 0.3s;
+}
+
+.test-card:hover {
+  transform: translateY(-4px);
+  border-color: rgba(196,148,96,0.18);
+}
+
+.test-estrellas {
+  display: flex;
+  gap: 3px;
+  margin-bottom: 1.2rem;
+}
+
+.test-estrella {
+  color: var(--cobre-suave);
+  font-size: 0.9rem;
+}
+
+.test-texto {
+  font-family: var(--serif);
+  font-size: 1.05rem;
+  font-style: italic;
+  line-height: 1.7;
+  color: rgba(232,220,198,0.8);
+  margin-bottom: 1.5rem;
+}
+
+.test-autor {
+  display: flex;
+  align-items: center;
+  gap: 0.8rem;
+}
+
+.test-avatar {
+  width: 36px;
+  height: 36px;
+  border-radius: 50%;
+  background: var(--verde-mid);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-family: var(--sans);
+  font-size: 0.7rem;
+  font-weight: 500;
+  color: var(--musgo);
+  flex-shrink: 0;
+}
+
+.test-nombre {
+  font-family: var(--sans);
+  font-size: 0.85rem;
+  font-weight: 500;
+  color: var(--crema);
+  margin-bottom: 0.1rem;
+}
+
+.test-origen {
+  font-family: var(--sans);
+  font-size: 0.75rem;
+  color: rgba(232,220,198,0.4);
+}
+
+/* ==================================================
+   SECCIÓN: GALERÍA (placeholders)
+   ================================================== */
+.galeria {
+  padding: var(--gap-xl) 0;
+  background: var(--verde-noche);
+}
+
+/* IMÁGENES GALERÍA: reemplazar cada .gal-item con <img src="...">
+   Contenido sugerido:
+   1. Familias caminando en bosque
+   2. Niños con lupa observando
+   3. Vista panorámica niebla
+   4. Pareja en sendero
+   5. Guía con grupo pequeño
+   6. Detalle musgo/roca volcánica */
+.gal-grid {
+  display: grid;
+  grid-template-columns: repeat(12, 1fr);
+  grid-template-rows: 240px 240px;
+  gap: 0.8rem;
+  margin-top: 3rem;
+  border-radius: 16px;
+  overflow: hidden;
+}
+
+.gal-item {
+  background: var(--verde);
+  border-radius: 10px;
+  overflow: hidden;
+  position: relative;
+  transition: transform 0.4s var(--ease), filter 0.4s;
+  cursor: pointer;
+}
+
+.gal-item:hover { transform: scale(1.015); filter: brightness(1.08); }
+
+.gal-item:nth-child(1) { grid-column: span 5; grid-row: span 2; background: var(--verde-noche); }
+.gal-item:nth-child(2) { grid-column: span 4; }
+.gal-item:nth-child(3) { grid-column: span 3; }
+.gal-item:nth-child(4) { grid-column: span 3; }
+.gal-item:nth-child(5) { grid-column: span 4; }
+.gal-item:nth-child(6) { grid-column: span 7; }
+
+.gal-placeholder {
+  position: absolute;
+  inset: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-family: var(--mono);
+  font-size: 0.52rem;
+  letter-spacing: 0.2em;
+  text-transform: uppercase;
+  color: rgba(232,220,198,0.18);
+  flex-direction: column;
+  gap: 0.4rem;
+}
+
+/* ==================================================
+   SECCIÓN: CÓMO LLEGAR
+   ================================================== */
+.logistica {
+  padding: var(--gap-lg) 0;
+  background: var(--negro);
+}
+
+.logistica-inner {
+  background: rgba(255,255,255,0.03);
+  border: 1px solid rgba(255,255,255,0.06);
+  border-radius: 20px;
+  padding: 3rem;
+  display: grid;
+  grid-template-columns: auto 1fr;
+  gap: 3rem;
+  align-items: center;
+}
+
+.logistica-ciudad {
+  text-align: center;
+}
+
+.logistica-ciudad .ciudad-nombre {
+  font-family: var(--serif);
+  font-size: 1.1rem;
+  color: var(--crema);
+}
+
+.logistica-ciudad .ciudad-distancia {
+  font-family: var(--mono);
+  font-size: 0.6rem;
+  letter-spacing: 0.2em;
+  color: var(--cobre-luz);
+  margin-top: 0.2rem;
+}
+
+.logistica-flecha {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  color: rgba(232,220,198,0.2);
+  font-size: 0.7rem;
+}
+
+.logistica-info p {
+  font-family: var(--sans);
+  font-size: 0.92rem;
+  color: rgba(232,220,198,0.6);
+  line-height: 1.7;
+}
+
+.logistica-info strong {
+  color: var(--crema);
+  font-weight: 500;
+}
+
+/* ==================================================
+   SECCIÓN: CTA FINAL
+   ================================================== */
+.cta-final {
+  padding: var(--gap-xl) 0;
+  background: var(--verde-noche);
+  text-align: center;
+  position: relative;
+  overflow: hidden;
+}
+
+.cta-final::before {
+  content: '';
+  position: absolute;
+  top: 50%; left: 50%;
+  transform: translate(-50%, -50%);
+  width: 600px; height: 600px;
+  border-radius: 50%;
+  background: radial-gradient(circle, rgba(90,122,84,0.1) 0%, transparent 70%);
+  pointer-events: none;
+}
+
+.cta-final-h2 {
+  font-family: var(--serif);
+  font-size: clamp(2.2rem, 4vw, 4rem);
+  font-weight: 400;
+  color: var(--crema);
+  margin-bottom: 1rem;
+  line-height: 1.2;
+}
+
+.cta-final-h2 em {
+  font-style: italic;
+  color: var(--cobre-suave);
+}
+
+.cta-final-p {
+  font-family: var(--sans);
+  font-size: 1.05rem;
+  color: rgba(232,220,198,0.6);
+  max-width: 480px;
+  margin: 0 auto 2.5rem;
+  line-height: 1.7;
+}
+
+.cta-final-btns {
+  display: flex;
+  gap: 1rem;
+  justify-content: center;
+  flex-wrap: wrap;
+}
+
+/* ==================================================
+   FOOTER
+   ================================================== */
+footer {
+  background: var(--negro);
+  border-top: 1px solid rgba(255,255,255,0.06);
+  padding: 4rem 0 2rem;
 }
 
 .footer-grid {
   display: grid;
-  grid-template-columns: 2fr 1fr 1fr 1fr;
+  grid-template-columns: 2.5fr 1fr 1fr 1fr;
   gap: 3rem;
-  margin-bottom: 3rem;
+  padding-bottom: 3rem;
+  border-bottom: 1px solid rgba(255,255,255,0.05);
+  margin-bottom: 2rem;
 }
 
-.footer-marca h3 {
-  font-family: var(--font-titulo);
-  font-size: 1.4rem;
-  font-weight: 400;
-  font-style: italic;
-  color: var(--beige-claro);
+.footer-logo {
+  font-family: var(--serif);
+  font-size: 1.1rem;
+  letter-spacing: 0.25em;
+  color: var(--crema);
   margin-bottom: 0.3rem;
 }
 
-.footer-marca .footer-sub {
-  font-family: var(--font-datos);
+.footer-logo-sub {
+  font-family: var(--mono);
   font-size: 0.5rem;
   letter-spacing: 0.3em;
   text-transform: uppercase;
-  color: var(--cobre-claro);
+  color: var(--cobre);
   margin-bottom: 1rem;
 }
 
-.footer-marca p {
-  font-family: var(--font-poema);
-  font-size: 0.9rem;
+.footer-bio {
+  font-family: var(--sans);
+  font-size: 0.85rem;
   line-height: 1.7;
-  color: rgba(232,220,200,0.45);
-  font-style: italic;
+  color: rgba(232,220,198,0.4);
+  max-width: 260px;
 }
 
-.footer-col h4 {
-  font-family: var(--font-datos);
+.footer-col-h {
+  font-family: var(--mono);
   font-size: 0.55rem;
   letter-spacing: 0.3em;
   text-transform: uppercase;
-  color: var(--cobre-claro);
+  color: var(--cobre);
   margin-bottom: 1.2rem;
 }
 
-.footer-col ul {
+.footer-col-links {
   list-style: none;
+  display: flex;
+  flex-direction: column;
+  gap: 0.7rem;
 }
 
-.footer-col li {
-  margin-bottom: 0.6rem;
-}
-
-.footer-col a {
-  font-family: var(--font-poema);
-  font-size: 0.9rem;
-  color: rgba(232,220,200,0.45);
+.footer-col-links a {
+  font-family: var(--sans);
+  font-size: 0.87rem;
+  color: rgba(232,220,198,0.45);
   text-decoration: none;
-  transition: color 0.3s;
-  font-style: italic;
+  transition: color 0.25s;
 }
 
-.footer-col a:hover { color: var(--beige-claro); }
+.footer-col-links a:hover { color: var(--beige); }
 
 .footer-bottom {
-  border-top: 1px solid rgba(232,220,200,0.05);
-  padding-top: 1.5rem;
   display: flex;
   justify-content: space-between;
   align-items: center;
 }
 
 .footer-copy {
-  font-family: var(--font-datos);
+  font-family: var(--mono);
   font-size: 0.55rem;
-  letter-spacing: 0.15em;
-  color: rgba(232,220,200,0.25);
+  letter-spacing: 0.12em;
+  color: rgba(232,220,198,0.22);
 }
 
 .footer-nahuatl {
-  font-family: var(--font-poema);
-  font-size: 0.85rem;
+  font-family: var(--serif);
   font-style: italic;
-  color: rgba(160,113,74,0.5);
+  font-size: 0.88rem;
+  color: rgba(196,148,96,0.4);
 }
 
-/* ============================================================
-   DIVISORES Y ORNAMENTOS
-   ============================================================ */
-.ornamento {
-  text-align: center;
-  margin: 2rem 0;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  gap: 1rem;
-}
-
-.ornamento::before,
-.ornamento::after {
-  content: '';
-  flex: 1;
-  height: 1px;
-  background: linear-gradient(90deg, transparent, rgba(160,113,74,0.2), transparent);
-  max-width: 200px;
-}
-
-.ornamento-glifo {
-  font-family: var(--font-datos);
-  font-size: 0.55rem;
-  letter-spacing: 0.4em;
-  color: rgba(160,113,74,0.4);
-  text-transform: uppercase;
-}
-
-/* ============================================================
+/* ==================================================
    ANIMACIONES DE ENTRADA
-   ============================================================ */
-.reveal {
+   ================================================== */
+.fade-up {
   opacity: 0;
-  transform: translateY(30px);
-  transition: opacity 0.9s cubic-bezier(0.16, 1, 0.3, 1), transform 0.9s cubic-bezier(0.16, 1, 0.3, 1);
+  transform: translateY(28px);
+  transition: opacity 0.85s var(--ease), transform 0.85s var(--ease);
 }
 
-.reveal.visible {
-  opacity: 1;
-  transform: translateY(0);
-}
+.fade-up.in { opacity: 1; transform: translateY(0); }
+.fade-up.d1 { transition-delay: 0.1s; }
+.fade-up.d2 { transition-delay: 0.2s; }
+.fade-up.d3 { transition-delay: 0.3s; }
+.fade-up.d4 { transition-delay: 0.4s; }
 
-.reveal-delay-1 { transition-delay: 0.1s; }
-.reveal-delay-2 { transition-delay: 0.2s; }
-.reveal-delay-3 { transition-delay: 0.3s; }
-.reveal-delay-4 { transition-delay: 0.4s; }
-
-/* ============================================================
+/* ==================================================
    RESPONSIVE
-   ============================================================ */
+   ================================================== */
+@media (max-width: 1024px) {
+  .beneficios-grid { grid-template-columns: repeat(2, 1fr); }
+  .exp-card.activa { grid-template-columns: 1fr; }
+  .exp-card-img { height: 340px; }
+  .kit-grid { grid-template-columns: 1fr; }
+  .kit-img { height: 320px; }
+  .footer-grid { grid-template-columns: 1fr 1fr; gap: 2rem; }
+  .test-grid { grid-template-columns: 1fr 1fr; }
+}
+
 @media (max-width: 768px) {
-  nav { padding: 1rem 1.5rem; }
-  nav.scrolled { padding: 0.8rem 1.5rem; }
+  :root { --gap-xl: 5rem; --gap-lg: 3rem; }
+  .que-es-grid { grid-template-columns: 1fr; }
+  .que-es-img { height: 300px; }
+  .incluye-grid { grid-template-columns: 1fr; }
+  .beneficios-grid { grid-template-columns: 1fr 1fr; }
+  .test-grid { grid-template-columns: 1fr; }
   .nav-links { display: none; }
-  
-  .narrativa { grid-template-columns: 1fr; gap: 3rem; }
-  .footer-grid { grid-template-columns: 1fr; gap: 2rem; }
-  .form-nenemi { grid-template-columns: 1fr; }
-  .form-grupo.ancho-completo,
-  .calendario-mini,
-  .form-submit { grid-column: 1; }
-  
-  .hero-titulo { font-size: clamp(2.5rem, 10vw, 4.5rem); }
-  .precios-grid { grid-template-columns: 1fr; max-width: 400px; }
+  .footer-grid { grid-template-columns: 1fr; }
+  .gal-grid {
+    grid-template-columns: 1fr 1fr;
+    grid-template-rows: auto;
+  }
+  .gal-item { grid-column: span 1 !important; grid-row: span 1 !important; height: 160px; }
+  .logistica-inner { grid-template-columns: 1fr; }
+  .hero-stats { flex-direction: column; gap: 1.2rem; }
+  .kit-items { grid-template-columns: 1fr; }
 }
 
 @media (max-width: 480px) {
-  .cal-leyenda { flex-direction: column; align-items: center; }
+  .beneficios-grid { grid-template-columns: 1fr; }
+  .exp-incluye { grid-template-columns: 1fr; }
+  .cta-final-btns { flex-direction: column; align-items: center; }
+  .hero-acciones { flex-direction: column; align-items: flex-start; }
 }
 </style>
 </head>
 <body>
+<h2 class="sr-only">NENEMI — Expediciones Bioculturales en Hidalgo, México</h2>
 
-<!-- Fondo animado niebla volcánica -->
-<div class="bg-fog"></div>
-<div class="bg-fog-grain"></div>
+<!-- =============================================
+     WhatsApp FAB
+     ============================================= -->
+<a href="https://wa.me/521XXXXXXXXXX?text=Hola%2C%20me%20interesa%20una%20expedici%C3%B3n%20Nenemi"
+   id="whatsapp-fab"
+   target="_blank"
+   rel="noopener"
+   aria-label="Contactar por WhatsApp">
+  <svg viewBox="0 0 24 24" fill="white" xmlns="http://www.w3.org/2000/svg">
+    <path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413z"/>
+  </svg>
+</a>
 
-<!-- ============================================================
-     NAVEGACIÓN
-     ============================================================ -->
-<nav id="nav-principal">
-  <a href="#" class="nav-logo">
-    NENEMI
-    <span>Caminar la montaña viva</span>
+<!-- =============================================
+     NAV
+     ============================================= -->
+<nav id="nav">
+  <a href="#inicio" class="nav-logo">
+    <span class="nav-logo-nombre">NENEMI</span>
+    <span class="nav-logo-sub">Expediciones Bioculturales · Hidalgo</span>
   </a>
-  <ul class="nav-links">
-    <li><a href="#expediciones-sec">Expediciones</a></li>
-    <li><a href="#campo-sec">Territorio</a></li>
-    <li><a href="#blog-sec">Divulgación</a></li>
-    <li><a href="#precios-sec">Niveles</a></li>
-    <li><a href="#cta-sec">Solicitar fecha</a></li>
-  </ul>
-  <button id="btn-silencio" title="Activar modo contemplativo">◯ Silencio</button>
+  <div class="nav-right">
+    <ul class="nav-links">
+      <li><a href="#expediciones-sec">Expediciones</a></li>
+      <li><a href="#kit-sec">Kit Niños</a></li>
+      <li><a href="#incluye-sec">¿Qué incluye?</a></li>
+      <li><a href="#testimonios-sec">Opiniones</a></li>
+    </ul>
+    <a href="https://wa.me/521XXXXXXXXXX?text=Quiero%20reservar%20una%20expedici%C3%B3n%20Nenemi"
+       class="nav-cta"
+       target="_blank">Reservar →</a>
+  </div>
 </nav>
 
-<!-- ============================================================
+<!-- =============================================
      HERO
-     ============================================================ -->
+     ============================================= -->
 <section class="hero" id="inicio">
-  <div class="hero-contenido parallax-hero" id="parallax-hero">
-    <div class="hero-overline">Expedición Biocultural · Hidalgo, México</div>
-    <h1 class="hero-titulo">
-      Donde la roca<br>
-      <em>fue fuego</em>
-    </h1>
-    <div class="hero-subtitulo">Expedición Biocultural — Territorios Vivos de Hidalgo</div>
-    <p class="hero-desc">
-      Hay lugares donde el bosque todavía respira lento. Donde la niebla toca las montañas antes del amanecer. Donde cada roca guarda la memoria del volcán.
-    </p>
-    <a href="#expediciones-sec" class="btn-principal">Iniciar Exploración</a>
+  <div class="hero-bg">
+    <!-- REEMPLAZAR CON VIDEO:
+    <video autoplay muted loop playsinline style="position:absolute;inset:0;width:100%;height:100%;object-fit:cover;z-index:1;">
+      <source src="videos/nenemi-niebla-bosque.mp4" type="video/mp4">
+    </video>
+    IMAGEN RESPALDO: <img src="img/hero-bosque-niebla-hidalgo.jpg" style="position:absolute;inset:0;width:100%;height:100%;object-fit:cover;z-index:1;"> -->
+    <div class="hero-bg-fog"></div>
   </div>
-  <div class="scroll-ind">
-    <span>Descender</span>
-    <div class="scroll-ind-linea"></div>
+
+  <div class="hero-contenido">
+    <div class="hero-inner">
+      <div class="hero-badge">Hidalgo, México · 2 hrs desde CDMX</div>
+      <h1 class="hero-h1">
+        Un respiro<br>
+        de la <em>ciudad</em>
+      </h1>
+      <p class="hero-desc">
+        Expediciones guiadas en los bosques y montañas de Hidalgo. Geología, biodiversidad e historia viva para familias, parejas y amigos que buscan reconectarse con la naturaleza.
+      </p>
+      <div class="hero-acciones">
+        <a href="#expediciones-sec" class="btn-primario">
+          Ver expediciones
+          <svg class="arrow-r" viewBox="0 0 16 16"><line x1="2" y1="8" x2="14" y2="8"/><polyline points="9,3 14,8 9,13"/></svg>
+        </a>
+        <a href="https://wa.me/521XXXXXXXXXX?text=Hola%2C%20me%20interesa%20una%20expedici%C3%B3n%20Nenemi"
+           class="btn-whatsapp"
+           target="_blank">
+          <svg viewBox="0 0 24 24" fill="currentColor"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413z"/></svg>
+          Reservar por WhatsApp
+        </a>
+      </div>
+
+      <div class="hero-stats">
+        <div>
+          <div class="hero-stat-num">4</div>
+          <div class="hero-stat-lab">Expediciones diseñadas</div>
+        </div>
+        <div>
+          <div class="hero-stat-num">2 hrs</div>
+          <div class="hero-stat-lab">Desde Ciudad de México</div>
+        </div>
+        <div>
+          <div class="hero-stat-num">+8</div>
+          <div class="hero-stat-lab">Personas / grupo máximo</div>
+        </div>
+        <div>
+          <div class="hero-stat-num">100%</div>
+          <div class="hero-stat-lab">Guiado y seguro</div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="scroll-ind" aria-hidden="true">
+    <div class="scroll-ind-line"></div>
+    <span>Explorar</span>
   </div>
 </section>
 
-<!-- ============================================================
-     NARRATIVA / MANIFIESTO
-     ============================================================ -->
-<section style="padding: 6rem 2rem; position: relative; z-index: 10;">
-  <div class="narrativa">
-    <div class="narrativa-texto reveal">
-      <div class="narrativa-poema">
-        El territorio no es fondo de pantalla.<br><br>
-        Es <strong>memoria geológica</strong>.<br>
-        Es agua que nació en silencio<br>
-        hace diez mil años.<br><br>
-        Es el bosque que recuerda<br>
-        antes del camino.<br><br>
-        <strong>Nenemi</strong> nace de ahí.
-      </div>
-    </div>
-    <div class="narrativa-manifiesto reveal reveal-delay-2">
-      <div class="seccion-overline">Manifiesto</div>
-      <h2>No hacemos turismo.<br>Creamos observadores.</h2>
-      <p>Exploramos los bosques, volcanes y territorios bioculturales de Hidalgo desde una mirada ecológica, científica y ancestral. Cada expedición es una lectura del paisaje vivo.</p>
-      <p>La lentitud es nuestra metodología. La montaña, nuestro laboratorio. La memoria del territorio, nuestra narrativa.</p>
-      <div style="margin-top: 1.5rem; display: flex; flex-wrap: wrap; gap: 0.4rem;">
-        <span class="data-tag">Geología</span>
-        <span class="data-tag">Bosque Templado</span>
-        <span class="data-tag">Etnobotánica</span>
-        <span class="data-tag">Paisaje Sonoro</span>
-        <span class="data-tag">Cartografía</span>
-        <span class="data-tag">Memoria Biocultural</span>
-      </div>
-    </div>
-  </div>
-</section>
+<!-- =============================================
+     QUÉ ES NENEMI
+     ============================================= -->
+<section class="que-es">
+  <div class="container">
+    <div class="que-es-grid">
 
-<!-- ============================================================
-     DATOS DE CAMPO — MAPA INTERACTIVO
-     ============================================================ -->
-<section class="campo-section" id="campo-sec">
-  <div class="seccion-header reveal">
-    <div class="seccion-overline">Datos de Campo</div>
-    <h2 class="seccion-titulo">El territorio habla</h2>
-    <p class="seccion-desc">Selecciona un punto en el mapa. Cada lugar guarda su propia narrativa geológica y biocultural.</p>
-  </div>
-
-  <div class="mapa-wrapper reveal reveal-delay-1">
-    <!-- MAPA SVG estilizado de la región de Hidalgo -->
-    <!-- En producción: reemplazar con imagen satelital/topográfica real de los territorios NENEMI -->
-    <div class="mapa-svg-container" style="position: relative;">
-      <svg id="mapa-territorio" viewBox="0 0 900 480" xmlns="http://www.w3.org/2000/svg">
-        <defs>
-          <filter id="glow-sutil">
-            <feGaussianBlur stdDeviation="3" result="blur"/>
-            <feMerge><feMergeNode in="blur"/><feMergeNode in="SourceGraphic"/></feMerge>
-          </filter>
-          <linearGradient id="grad-territorio" x1="0%" y1="0%" x2="100%" y2="100%">
-            <stop offset="0%" style="stop-color:#1a2e1a;stop-opacity:1" />
-            <stop offset="40%" style="stop-color:#2d3820;stop-opacity:1" />
-            <stop offset="100%" style="stop-color:#1e2416;stop-opacity:1" />
-          </linearGradient>
-          <!-- Patrón de topografía sutil -->
-          <pattern id="topo-pat" width="60" height="60" patternUnits="userSpaceOnUse">
-            <path d="M0 30 Q15 20 30 30 Q45 40 60 30" fill="none" stroke="rgba(232,220,200,0.04)" stroke-width="0.8"/>
-            <path d="M0 50 Q15 40 30 50 Q45 60 60 50" fill="none" stroke="rgba(232,220,200,0.03)" stroke-width="0.6"/>
-            <path d="M0 10 Q15 0 30 10 Q45 20 60 10" fill="none" stroke="rgba(232,220,200,0.03)" stroke-width="0.6"/>
-          </pattern>
-        </defs>
-
-        <!-- Fondo mapa -->
-        <rect width="900" height="480" fill="url(#grad-territorio)" rx="12"/>
-        <rect width="900" height="480" fill="url(#topo-pat)" rx="12"/>
-
-        <!-- Silueta estilizada región Hidalgo / Sierra Otomí-Tepehua -->
-        <!-- Cadenas montañosas estilizadas -->
-        <g opacity="0.18">
-          <!-- Montañas norte -->
-          <polygon points="50,280 120,180 190,280" fill="rgba(74,103,65,0.6)" stroke="rgba(232,220,200,0.15)" stroke-width="0.5"/>
-          <polygon points="140,280 220,160 300,280" fill="rgba(58,56,50,0.7)" stroke="rgba(232,220,200,0.12)" stroke-width="0.5"/>
-          <polygon points="240,290 330,150 420,290" fill="rgba(74,103,65,0.5)" stroke="rgba(232,220,200,0.1)" stroke-width="0.5"/>
-          <!-- Montañas centro -->
-          <polygon points="380,300 470,140 560,300" fill="rgba(58,56,50,0.6)" stroke="rgba(232,220,200,0.12)" stroke-width="0.5"/>
-          <polygon points="500,310 590,170 680,310" fill="rgba(74,103,65,0.55)" stroke="rgba(232,220,200,0.1)" stroke-width="0.5"/>
-          <!-- Montañas sur -->
-          <polygon points="620,320 710,190 800,320" fill="rgba(58,56,50,0.5)" stroke="rgba(232,220,200,0.1)" stroke-width="0.5"/>
-          <polygon points="730,330 820,200 900,330" fill="rgba(74,103,65,0.4)" stroke="rgba(232,220,200,0.08)" stroke-width="0.5"/>
-        </g>
-
-        <!-- Ríos estilizados -->
-        <g opacity="0.25">
-          <path d="M200 100 Q260 180 280 280 Q295 340 320 420" fill="none" stroke="rgba(100,140,160,0.6)" stroke-width="1.5"/>
-          <path d="M450 80 Q490 160 500 250 Q508 320 530 420" fill="none" stroke="rgba(100,140,160,0.5)" stroke-width="1"/>
-          <path d="M680 120 Q700 200 710 290 Q718 360 730 440" fill="none" stroke="rgba(100,140,160,0.4)" stroke-width="1"/>
-        </g>
-
-        <!-- Líneas de cuadrícula topográfica -->
-        <g opacity="0.06">
-          <line x1="0" y1="120" x2="900" y2="120" stroke="rgba(232,220,200,1)" stroke-width="0.5"/>
-          <line x1="0" y1="240" x2="900" y2="240" stroke="rgba(232,220,200,1)" stroke-width="0.5"/>
-          <line x1="0" y1="360" x2="900" y2="360" stroke="rgba(232,220,200,1)" stroke-width="0.5"/>
-          <line x1="225" y1="0" x2="225" y2="480" stroke="rgba(232,220,200,1)" stroke-width="0.5"/>
-          <line x1="450" y1="0" x2="450" y2="480" stroke="rgba(232,220,200,1)" stroke-width="0.5"/>
-          <line x1="675" y1="0" x2="675" y2="480" stroke="rgba(232,220,200,1)" stroke-width="0.5"/>
-        </g>
-
-        <!-- Etiqueta de región -->
-        <text x="30" y="30" font-family="'Roboto Mono', monospace" font-size="9" fill="rgba(196,154,108,0.5)" letter-spacing="3">HIDALGO — SIERRA OTOMÍ-TEPEHUA</text>
-        <text x="30" y="46" font-family="'Roboto Mono', monospace" font-size="7" fill="rgba(232,220,200,0.2)" letter-spacing="2">20°03'N — 98°44'W · ESCALA INTERPRETATIVA</text>
-
-        <!-- Escala gráfica -->
-        <line x1="820" y1="455" x2="880" y2="455" stroke="rgba(232,220,200,0.25)" stroke-width="1"/>
-        <line x1="820" y1="452" x2="820" y2="458" stroke="rgba(232,220,200,0.25)" stroke-width="1"/>
-        <line x1="880" y1="452" x2="880" y2="458" stroke="rgba(232,220,200,0.25)" stroke-width="1"/>
-        <text x="850" y="467" font-family="'Roboto Mono', monospace" font-size="7" fill="rgba(232,220,200,0.2)" text-anchor="middle">30 km</text>
-
-        <!-- ===== PUNTOS INTERACTIVOS ===== -->
-        <!-- Punto 1: Volcán Cerro Las Navajas -->
-        <g class="punto-mapa" id="punto-1" data-id="1" style="cursor:pointer;"
-           transform="translate(320, 195)">
-          <circle class="outer" r="5" fill="none" stroke="rgba(196,154,108,0.8)" stroke-width="1" style="animation: pulso-anillo 2.5s ease-out infinite;"/>
-          <circle class="inner" r="5" fill="#a0714a" stroke="rgba(232,220,200,0.3)" stroke-width="1"/>
-          <text x="12" y="4" font-family="'Roboto Mono', monospace" font-size="8" fill="rgba(196,154,108,0.8)">Cerro Las Navajas</text>
-        </g>
-
-        <!-- Punto 2: Bosque Mesófilo -->
-        <g class="punto-mapa" id="punto-2" data-id="2" style="cursor:pointer;"
-           transform="translate(520, 260)">
-          <circle class="outer" r="5" fill="none" stroke="rgba(74,103,65,0.9)" stroke-width="1" style="animation: pulso-anillo 2.5s ease-out 0.8s infinite;"/>
-          <circle class="inner" r="5" fill="#4a6741" stroke="rgba(232,220,200,0.3)" stroke-width="1"/>
-          <text x="12" y="4" font-family="'Roboto Mono', monospace" font-size="8" fill="rgba(130,170,110,0.8)">Bosque Mesófilo</text>
-        </g>
-
-        <!-- Punto 3: Zona Arqueológica / Memoria -->
-        <g class="punto-mapa" id="punto-3" data-id="3" style="cursor:pointer;"
-           transform="translate(200, 340)">
-          <circle class="outer" r="5" fill="none" stroke="rgba(160,113,74,0.8)" stroke-width="1" style="animation: pulso-anillo 2.5s ease-out 1.6s infinite;"/>
-          <circle class="inner" r="5" fill="#7a6548" stroke="rgba(232,220,200,0.3)" stroke-width="1"/>
-          <text x="12" y="4" font-family="'Roboto Mono', monospace" font-size="8" fill="rgba(196,154,108,0.8)">Memoria Territorial</text>
-        </g>
-
-        <!-- Leyenda del mapa -->
-        <g transform="translate(30, 420)">
-          <circle cx="0" cy="0" r="4" fill="#a0714a"/>
-          <text x="10" y="4" font-family="'Roboto Mono', monospace" font-size="7" fill="rgba(232,220,200,0.4)">Volcánico</text>
-          <circle cx="80" cy="0" r="4" fill="#4a6741"/>
-          <text x="90" y="4" font-family="'Roboto Mono', monospace" font-size="7" fill="rgba(232,220,200,0.4)">Biológico</text>
-          <circle cx="155" cy="0" r="4" fill="#7a6548"/>
-          <text x="165" y="4" font-family="'Roboto Mono', monospace" font-size="7" fill="rgba(232,220,200,0.4)">Cultural</text>
-        </g>
-      </svg>
-
-      <!-- TARJETAS FLOTANTES DE DATOS -->
-      <div class="tarjeta-campo" id="tarjeta-1" style="top: 20px; left: 320px;">
-        <button class="tarjeta-campo-cierre" onclick="cerrarTarjeta('tarjeta-1')">✕</button>
-        <div class="tarjeta-campo-zona">Zona Volcánica · Coord. 20°11'N 98°32'W</div>
-        <h4>Cerro Las Navajas</h4>
-        <div class="tarjeta-dato">
-          <span class="tarjeta-dato-label">Origen geológico</span>
-          <span class="tarjeta-dato-valor">Obsidiana riolítica</span>
+      <div class="que-es-img fade-up">
+        <!-- IMAGEN: bosque-niebla-hidalgo-primer-plano.jpg -->
+        <div class="que-es-img-placeholder">
+          <svg width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="rgba(232,220,198,0.3)" stroke-width="1.5"><rect x="3" y="3" width="18" height="18" rx="2"/><circle cx="8.5" cy="8.5" r="1.5"/><polyline points="21,15 16,10 5,21"/></svg>
+          <span>Fotografía de campo<br>Bosque mesófilo · Hidalgo</span>
         </div>
-        <div class="tarjeta-dato">
-          <span class="tarjeta-dato-label">Edad estimada</span>
-          <span class="tarjeta-dato-valor">~10 Ma</span>
-        </div>
-        <div class="tarjeta-dato">
-          <span class="tarjeta-dato-label">Altitud</span>
-          <span class="tarjeta-dato-valor">3,280 m.s.n.m.</span>
-        </div>
-        <div class="tarjeta-dato">
-          <span class="tarjeta-dato-label">Tipo</span>
-          <span class="tarjeta-dato-valor">Andesita / Obsidiana</span>
-        </div>
-        <div class="tarjeta-dato">
-          <span class="tarjeta-dato-label">Uso ancestral</span>
-          <span class="tarjeta-dato-valor">Taller lítico Otomí</span>
-        </div>
-        <div class="tarjeta-dato">
-          <span class="tarjeta-dato-label">Memoria</span>
-          <span class="tarjeta-dato-valor">Centro extracción prehisp.</span>
+        <div class="que-es-badge-img">
+          <div class="num">2 hrs</div>
+          <div class="lab">Desde Ciudad de México</div>
         </div>
       </div>
 
-      <div class="tarjeta-campo" id="tarjeta-2" style="top: 60px; left: 520px;">
-        <button class="tarjeta-campo-cierre" onclick="cerrarTarjeta('tarjeta-2')">✕</button>
-        <div class="tarjeta-campo-zona">Bosque Mesófilo · Sierra Otomí-Tepehua</div>
-        <h4>El Bosque que Respira</h4>
-        <div class="tarjeta-dato">
-          <span class="tarjeta-dato-label">Tipo de bosque</span>
-          <span class="tarjeta-dato-valor">Mesófilo de montaña</span>
-        </div>
-        <div class="tarjeta-dato">
-          <span class="tarjeta-dato-label">Cobertura</span>
-          <span class="tarjeta-dato-valor">~1,200 ha conservadas</span>
-        </div>
-        <div class="tarjeta-dato">
-          <span class="tarjeta-dato-label">Precipitación</span>
-          <span class="tarjeta-dato-valor">2,800 mm/año</span>
-        </div>
-        <div class="tarjeta-dato">
-          <span class="tarjeta-dato-label">Niebla</span>
-          <span class="tarjeta-dato-valor">260 días/año</span>
-        </div>
-        <div class="tarjeta-dato">
-          <span class="tarjeta-dato-label">Especies endémicas</span>
-          <span class="tarjeta-dato-valor">+48 registradas</span>
-        </div>
-        <div class="tarjeta-dato">
-          <span class="tarjeta-dato-label">Hongos</span>
-          <span class="tarjeta-dato-valor">+120 morfoespecies</span>
+      <div class="fade-up d2">
+        <div class="label-seccion">¿Qué es NENEMI?</div>
+        <h2 class="seccion-h2">No somos un tour.<br>Somos <em>una expedición.</em></h2>
+        <p class="seccion-p">
+          Nenemi es una empresa de expediciones bioculturales en las montañas de Hidalgo. Combinamos senderismo guiado, interpretación ambiental, geología, historia regional y bienestar en una experiencia diseñada para desconectar del ritmo urbano.
+        </p>
+        <p class="seccion-p">
+          Cada ruta tiene un guía especializado que convierte el paisaje en un laboratorio vivo: las rocas cuentan millones de años, el bosque revela sus mecanismos, el agua narra su origen.
+        </p>
+        <blockquote class="destaque-texto">
+          "No necesitas experiencia previa. Solo ganas de caminar, respirar y descubrir."
+        </blockquote>
+        <div style="display:flex; flex-wrap:wrap; gap:0.5rem; margin-top:0.5rem;">
+          <span style="font-family:var(--mono);font-size:0.55rem;letter-spacing:0.18em;text-transform:uppercase;color:var(--cobre-luz);border:1px solid rgba(196,148,96,0.22);padding:0.22rem 0.65rem;border-radius:50px;">Geología</span>
+          <span style="font-family:var(--mono);font-size:0.55rem;letter-spacing:0.18em;text-transform:uppercase;color:var(--cobre-luz);border:1px solid rgba(196,148,96,0.22);padding:0.22rem 0.65rem;border-radius:50px;">Biodiversidad</span>
+          <span style="font-family:var(--mono);font-size:0.55rem;letter-spacing:0.18em;text-transform:uppercase;color:var(--cobre-luz);border:1px solid rgba(196,148,96,0.22);padding:0.22rem 0.65rem;border-radius:50px;">Historia regional</span>
+          <span style="font-family:var(--mono);font-size:0.55rem;letter-spacing:0.18em;text-transform:uppercase;color:var(--cobre-luz);border:1px solid rgba(196,148,96,0.22);padding:0.22rem 0.65rem;border-radius:50px;">Bienestar</span>
+          <span style="font-family:var(--mono);font-size:0.55rem;letter-spacing:0.18em;text-transform:uppercase;color:var(--cobre-luz);border:1px solid rgba(196,148,96,0.22);padding:0.22rem 0.65rem;border-radius:50px;">Familias y niños</span>
         </div>
       </div>
-
-      <div class="tarjeta-campo" id="tarjeta-3" style="top: 200px; left: 30px;">
-        <button class="tarjeta-campo-cierre" onclick="cerrarTarjeta('tarjeta-3')">✕</button>
-        <div class="tarjeta-campo-zona">Territorio Cultural · Comunidades Hñähñu</div>
-        <h4>La Montaña Recuerda</h4>
-        <div class="tarjeta-dato">
-          <span class="tarjeta-dato-label">Pueblo originario</span>
-          <span class="tarjeta-dato-valor">Otomí / Hñähñu</span>
-        </div>
-        <div class="tarjeta-dato">
-          <span class="tarjeta-dato-label">Presencia</span>
-          <span class="tarjeta-dato-valor">+3,500 años</span>
-        </div>
-        <div class="tarjeta-dato">
-          <span class="tarjeta-dato-label">Territorio</span>
-          <span class="tarjeta-dato-valor">Sierra Madre Oriental</span>
-        </div>
-        <div class="tarjeta-dato">
-          <span class="tarjeta-dato-label">Plantas medicinales</span>
-          <span class="tarjeta-dato-valor">+200 spp. documentadas</span>
-        </div>
-        <div class="tarjeta-dato">
-          <span class="tarjeta-dato-label">Lengua viva</span>
-          <span class="tarjeta-dato-valor">Hñähñu activo</span>
-        </div>
-        <div class="tarjeta-dato">
-          <span class="tarjeta-dato-label">Memoria hídrica</span>
-          <span class="tarjeta-dato-valor">28 manantiales sagrados</span>
-        </div>
-      </div>
-    </div>
-
-    <div style="margin-top: 1rem; font-family: var(--font-datos); font-size: 0.55rem; letter-spacing: 0.2em; text-transform: uppercase; color: rgba(232,220,200,0.25); text-align: center;">
-      Mapa interpretativo — No cartografía oficial — Selecciona un punto para acceder a datos de campo
     </div>
   </div>
 </section>
 
-<!-- ============================================================
-     EXPEDICIONES / SERVICIOS
-     ============================================================ -->
+<!-- =============================================
+     BENEFICIOS
+     ============================================= -->
+<section class="beneficios">
+  <div class="container">
+    <div class="label-seccion fade-up">Por qué ir</div>
+    <h2 class="seccion-h2 fade-up d1">Lo que llevarás contigo</h2>
+    <div class="beneficios-grid">
+
+      <div class="beneficio-card fade-up d1">
+        <svg class="beneficio-icono" viewBox="0 0 42 42" fill="none" xmlns="http://www.w3.org/2000/svg">
+          <circle cx="21" cy="21" r="19" stroke="rgba(90,122,84,0.3)" stroke-width="1"/>
+          <path d="M21 8 C16 8 12 14 12 18 C12 26 21 32 21 32 C21 32 30 26 30 18 C30 14 26 8 21 8Z" stroke="rgba(90,122,84,0.7)" stroke-width="1.2" fill="none"/>
+          <path d="M15 22 Q21 18 27 22" stroke="rgba(90,122,84,0.5)" stroke-width="1" fill="none"/>
+        </svg>
+        <div class="beneficio-titulo">Naturaleza</div>
+        <div class="beneficio-desc">Bosques templados, senderos entre niebla, formaciones volcánicas y biodiversidad de montaña a 2 horas de la ciudad.</div>
+      </div>
+
+      <div class="beneficio-card fade-up d2">
+        <svg class="beneficio-icono" viewBox="0 0 42 42" fill="none" xmlns="http://www.w3.org/2000/svg">
+          <circle cx="21" cy="21" r="19" stroke="rgba(196,148,96,0.3)" stroke-width="1"/>
+          <circle cx="21" cy="16" r="5" stroke="rgba(196,148,96,0.7)" stroke-width="1.2"/>
+          <path d="M14 32 Q14 24 21 24 Q28 24 28 32" stroke="rgba(196,148,96,0.5)" stroke-width="1.2" fill="none"/>
+          <path d="M27 17 L33 15" stroke="rgba(196,148,96,0.4)" stroke-width="1"/>
+        </svg>
+        <div class="beneficio-titulo">Aprendizaje</div>
+        <div class="beneficio-desc">Geología, botánica, historia regional e interpretación ambiental. El paisaje se convierte en un libro abierto.</div>
+      </div>
+
+      <div class="beneficio-card fade-up d3">
+        <svg class="beneficio-icono" viewBox="0 0 42 42" fill="none" xmlns="http://www.w3.org/2000/svg">
+          <circle cx="21" cy="21" r="19" stroke="rgba(122,148,112,0.3)" stroke-width="1"/>
+          <path d="M13 26 Q17 14 21 22 Q25 30 29 18" stroke="rgba(122,148,112,0.7)" stroke-width="1.5" fill="none" stroke-linecap="round"/>
+          <circle cx="21" cy="21" r="3" stroke="rgba(122,148,112,0.5)" stroke-width="1"/>
+        </svg>
+        <div class="beneficio-titulo">Bienestar</div>
+        <div class="beneficio-desc">Una pausa real del estrés urbano. El bosque reduce el cortisol, restaura la atención y recarga energía de forma comprobada.</div>
+      </div>
+
+      <div class="beneficio-card fade-up d4">
+        <svg class="beneficio-icono" viewBox="0 0 42 42" fill="none" xmlns="http://www.w3.org/2000/svg">
+          <circle cx="21" cy="21" r="19" stroke="rgba(160,113,74,0.3)" stroke-width="1"/>
+          <circle cx="15" cy="19" r="4" stroke="rgba(160,113,74,0.6)" stroke-width="1"/>
+          <circle cx="27" cy="19" r="4" stroke="rgba(160,113,74,0.6)" stroke-width="1"/>
+          <path d="M19 19 L23 19" stroke="rgba(160,113,74,0.4)" stroke-width="1"/>
+          <path d="M11 30 Q11 24 15 24 Q19 24 21 27 Q23 24 27 24 Q31 24 31 30" stroke="rgba(160,113,74,0.5)" stroke-width="1" fill="none"/>
+        </svg>
+        <div class="beneficio-titulo">Convivencia</div>
+        <div class="beneficio-desc">Experiencias para parejas, familias con niños, grupos de amigos. Grupos pequeños para una experiencia íntima y personal.</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- =============================================
+     EXPEDICIONES
+     ============================================= -->
 <section class="expediciones" id="expediciones-sec">
-  <div class="seccion-header reveal">
-    <div class="seccion-overline">Lo que ofrecemos</div>
-    <h2 class="seccion-titulo">Modalidades de Exploración</h2>
-    <p class="seccion-desc">Cada expedición es una lectura distinta del mismo territorio.</p>
-  </div>
+  <div class="container">
+    <div class="label-seccion fade-up">Las rutas</div>
+    <h2 class="seccion-h2 fade-up d1">Elige tu <em>expedición</em></h2>
 
-  <div class="expediciones-grid">
-    <div class="expedicion-card reveal">
-      <!-- ICONO: Reemplazar con SVG personalizado inspirado en códice mesoamericano -->
-      <svg class="exp-icono" viewBox="0 0 40 40" fill="none" xmlns="http://www.w3.org/2000/svg">
-        <circle cx="20" cy="20" r="18" stroke="rgba(196,154,108,0.4)" stroke-width="0.8"/>
-        <path d="M20 8 L20 32 M12 14 L28 14 M10 22 L30 22 M14 30 L26 30" stroke="rgba(196,154,108,0.6)" stroke-width="0.8" stroke-linecap="round"/>
-      </svg>
-      <div class="exp-num">01 — Interpretación</div>
-      <div class="exp-titulo">Guía Científica</div>
-      <div class="exp-desc">Un guía intérprete del paisaje acompaña la expedición. Lectura geológica, botánica y cultural del territorio en tiempo real.</div>
-      <div class="exp-tags">
-        <span class="exp-tag">Geología</span>
-        <span class="exp-tag">Botánica</span>
-        <span class="exp-tag">Etnobotánica</span>
-      </div>
+    <!-- Tabs de selección -->
+    <div class="exp-tabs" role="tablist" aria-label="Seleccionar expedición">
+      <button class="exp-tab activo" role="tab" onclick="mostrarExp(0, this)">01 · Corazón Verde</button>
+      <button class="exp-tab" role="tab" onclick="mostrarExp(1, this)">02 · La Cima que Sana</button>
+      <button class="exp-tab" role="tab" onclick="mostrarExp(2, this)">03 · Raíces y Memorias</button>
+      <button class="exp-tab" role="tab" onclick="mostrarExp(3, this)">04 · Sueño de Niebla</button>
     </div>
 
-    <div class="expedicion-card reveal reveal-delay-1">
-      <svg class="exp-icono" viewBox="0 0 40 40" fill="none" xmlns="http://www.w3.org/2000/svg">
-        <rect x="8" y="10" width="24" height="20" rx="2" stroke="rgba(74,103,65,0.6)" stroke-width="0.8"/>
-        <path d="M12 16 L28 16 M12 20 L22 20 M12 24 L25 24" stroke="rgba(74,103,65,0.6)" stroke-width="0.8" stroke-linecap="round"/>
-        <circle cx="30" cy="30" r="6" fill="none" stroke="rgba(196,154,108,0.5)" stroke-width="0.8"/>
-        <path d="M28 30 L30 32 L33 28" stroke="rgba(196,154,108,0.5)" stroke-width="0.8" stroke-linecap="round"/>
-      </svg>
-      <div class="exp-num">02 — Material</div>
-      <div class="exp-titulo">Kit del Observador</div>
-      <div class="exp-desc">Cuaderno de campo, lupa botánica, mapa topográfico impreso, guía de flora y fauna local. Herramientas para la mirada lenta.</div>
-      <div class="exp-tags">
-        <span class="exp-tag">Niños</span>
-        <span class="exp-tag">Familias</span>
-        <span class="exp-tag">Adultos</span>
-      </div>
-    </div>
-
-    <div class="expedicion-card reveal reveal-delay-2">
-      <svg class="exp-icono" viewBox="0 0 40 40" fill="none" xmlns="http://www.w3.org/2000/svg">
-        <circle cx="20" cy="20" r="14" stroke="rgba(160,113,74,0.4)" stroke-width="0.8"/>
-        <circle cx="20" cy="20" r="6" stroke="rgba(160,113,74,0.6)" stroke-width="0.8"/>
-        <circle cx="20" cy="20" r="1.5" fill="rgba(196,154,108,0.8)"/>
-      </svg>
-      <div class="exp-num">03 — Experiencia</div>
-      <div class="exp-titulo">Expedición en Silencio</div>
-      <div class="exp-desc">Caminata en escucha activa. Sin palabras innecesarias. El paisaje sonoro, la niebla y el territorio como únicos narradores.</div>
-      <div class="exp-tags">
-        <span class="exp-tag">Meditación</span>
-        <span class="exp-tag">Sensorial</span>
-        <span class="exp-tag">Contemplación</span>
-      </div>
-    </div>
-
-    <div class="expedicion-card reveal reveal-delay-3">
-      <svg class="exp-icono" viewBox="0 0 40 40" fill="none" xmlns="http://www.w3.org/2000/svg">
-        <path d="M8 32 L20 8 L32 32" stroke="rgba(92,88,80,0.6)" stroke-width="0.8" fill="none"/>
-        <path d="M14 24 L26 24" stroke="rgba(92,88,80,0.5)" stroke-width="0.8"/>
-        <circle cx="20" cy="8" r="2" fill="rgba(196,154,108,0.6)"/>
-        <path d="M8 38 L32 38" stroke="rgba(160,113,74,0.4)" stroke-width="0.8"/>
-      </svg>
-      <div class="exp-num">04 — Registro</div>
-      <div class="exp-titulo">Documentación</div>
-      <div class="exp-desc">Fotografía científica, paisaje sonoro, cartografía participativa y bitácora de campo. Cada expedición produce un archivo del territorio.</div>
-      <div class="exp-tags">
-        <span class="exp-tag">Fotografía</span>
-        <span class="exp-tag">SIG</span>
-        <span class="exp-tag">Bioacústica</span>
-      </div>
-    </div>
-  </div>
-</section>
-
-<!-- ============================================================
-     BLOG / DIVULGACIÓN CIENTÍFICA
-     ============================================================ -->
-<section class="blog" id="blog-sec">
-  <div class="seccion-header reveal">
-    <div class="seccion-overline">Divulgación Científica</div>
-    <h2 class="seccion-titulo">La montaña explica</h2>
-    <p class="seccion-desc">Observaciones ecológicas, poesía territorial y ciencia del paisaje desde Hidalgo.</p>
-  </div>
-
-  <div class="blog-grid">
-    <article class="blog-card reveal">
-      <div class="blog-imagen">
-        <!-- IMAGEN: Reemplazar con foto de niebla en bosque mesófilo Hidalgo -->
-        <div class="blog-imagen-placeholder">[ Fotografía de campo<br>Bosque mesófilo · Niebla ]</div>
-        <div class="blog-imagen-cat">Geología</div>
-      </div>
-      <div class="blog-cuerpo">
-        <div class="blog-fecha">— 12 Mayo 2025 · Lectura 4 min</div>
-        <h3 class="blog-titulo">Cada roca fue fuego: memoria volcánica de la Sierra</h3>
-        <p class="blog-extracto">La obsidiana no es solo piedra. Es tiempo solidificado. El Cerro Las Navajas guarda en su silicio la historia de la tierra que todavía tiembla.</p>
-      </div>
-    </article>
-
-    <article class="blog-card reveal reveal-delay-1">
-      <div class="blog-imagen">
-        <!-- IMAGEN: Reemplazar con imagen de hongos / micología del bosque -->
-        <div class="blog-imagen-placeholder">[ Fotografía de campo<br>Micología · Hongos del bosque ]</div>
-        <div class="blog-imagen-cat">Biología</div>
-      </div>
-      <div class="blog-cuerpo">
-        <div class="blog-fecha">— 28 Abril 2025 · Lectura 6 min</div>
-        <h3 class="blog-titulo">Red miceliar: el internet del bosque que nadie ve</h3>
-        <p class="blog-extracto">Bajo la hojarasca, los hongos construyen redes de comunicación que conectan árboles de distintas especies. El bosque no está solo. Habla.</p>
-      </div>
-    </article>
-
-    <article class="blog-card reveal reveal-delay-2">
-      <div class="blog-imagen">
-        <!-- IMAGEN: Reemplazar con imagen de comunidad otomí o paisaje cultural -->
-        <div class="blog-imagen-placeholder">[ Fotografía de campo<br>Cultura · Hñähñu · Territorio ]</div>
-        <div class="blog-imagen-cat">Territorio</div>
-      </div>
-      <div class="blog-cuerpo">
-        <div class="blog-fecha">— 10 Abril 2025 · Lectura 8 min</div>
-        <h3 class="blog-titulo">Hñähñu: el pueblo que nombró el agua antes del mapa</h3>
-        <p class="blog-extracto">Los topónimos del pueblo Otomí son cartografía ecológica. Cada nombre de cerro, río o manantial es una bitácora de relación con el territorio.</p>
-      </div>
-    </article>
-  </div>
-
-  <div style="text-align: center; margin-top: 3rem;">
-    <a href="#" class="btn-principal" style="font-size: 0.6rem;">Ver todas las observaciones</a>
-  </div>
-</section>
-
-<!-- ============================================================
-     PRECIOS / NIVELES DE EXPERIENCIA
-     ============================================================ -->
-<section class="precios" id="precios-sec">
-  <div class="seccion-header reveal">
-    <div class="seccion-overline">Niveles de Experiencia</div>
-    <h2 class="seccion-titulo">¿Qué tan profundo quieres ir?</h2>
-    <p class="seccion-desc">Cada nivel es una intensidad diferente de presencia en el territorio.</p>
-  </div>
-
-  <div class="precios-grid">
-    <!-- Nivel Estándar -->
-    <div class="precio-card reveal">
-      <div class="precio-nivel">Nivel I</div>
-      <div class="precio-titulo">Estándar</div>
-      <div class="precio-valor">
-        <div class="precio-desde">Desde</div>
-        <div class="precio-monto"><sup>$</sup>850<span> MXN/obs.</span></div>
-      </div>
-      <div class="precio-divisor"></div>
-      <ul class="precio-incluye">
-        <li>Caminata interpretativa 4–5 hrs</li>
-        <li>Guía intérprete del paisaje</li>
-        <li>Kit básico del observador</li>
-        <li>Mapa topográfico impreso</li>
-        <li>Bitácora de campo</li>
-        <li>Grupos de hasta 12 personas</li>
-        <li>Adecuado para familias y niños</li>
-      </ul>
-      <button class="precio-btn" onclick="document.getElementById('cta-sec').scrollIntoView({behavior:'smooth'})">Solicitar fecha</button>
-    </div>
-
-    <!-- Nivel Profunda (destacado) -->
-    <div class="precio-card destacado reveal reveal-delay-1">
-      <div class="precio-destaque-label">Más solicitado</div>
-      <div class="precio-nivel">Nivel II</div>
-      <div class="precio-titulo">Profunda</div>
-      <div class="precio-valor">
-        <div class="precio-desde">Desde</div>
-        <div class="precio-monto"><sup>$</sup>1,800<span> MXN/obs.</span></div>
-      </div>
-      <div class="precio-divisor"></div>
-      <ul class="precio-incluye">
-        <li>Expedición completa 7–8 hrs</li>
-        <li>Guía científico especializado</li>
-        <li>Kit completo del observador</li>
-        <li>Fotografía del territorio incluida</li>
-        <li>Paisaje sonoro grabado</li>
-        <li>Acceso a zonas restringidas</li>
-        <li>Grupos pequeños máx. 8 personas</li>
-        <li>Informe de campo digital</li>
-      </ul>
-      <button class="precio-btn" onclick="document.getElementById('cta-sec').scrollIntoView({behavior:'smooth'})">Solicitar fecha</button>
-    </div>
-
-    <!-- Nivel Ancestral -->
-    <div class="precio-card reveal reveal-delay-2">
-      <div class="precio-nivel">Nivel III</div>
-      <div class="precio-titulo">Ancestral</div>
-      <div class="precio-valor">
-        <div class="precio-desde">Desde</div>
-        <div class="precio-monto"><sup>$</sup>3,400<span> MXN/obs.</span></div>
-      </div>
-      <div class="precio-divisor"></div>
-      <ul class="precio-incluye">
-        <li>Expedición 2 días + vivac</li>
-        <li>Equipo científico multidisciplinar</li>
-        <li>Encuentro con comunidad Hñähñu</li>
-        <li>Cartografía participativa</li>
-        <li>Dron + imágenes satelitales</li>
-        <li>Modelo 3D del territorio</li>
-        <li>Grupos exclusivos máx. 4 obs.</li>
-        <li>Publicación colaborativa</li>
-      </ul>
-      <button class="precio-btn" onclick="document.getElementById('cta-sec').scrollIntoView({behavior:'smooth'})">Solicitar fecha</button>
-    </div>
-  </div>
-
-  <div style="text-align: center; margin-top: 2.5rem;">
-    <p style="font-family: var(--font-datos); font-size: 0.55rem; letter-spacing: 0.15em; color: rgba(232,220,200,0.3);">
-      * Precios por observador · Mínimo 2 personas · Los precios pueden ajustarse según grupo y temporada
-    </p>
-  </div>
-</section>
-
-<!-- ============================================================
-     CTA — SOLICITAR FECHA
-     ============================================================ -->
-<section class="cta" id="cta-sec">
-  <div class="cta-inner">
-    <div class="seccion-header reveal">
-      <div class="seccion-overline">Solicitar Fecha</div>
-      <h2 class="seccion-titulo">El territorio te espera</h2>
-    </div>
-    <p class="reveal reveal-delay-1">
-      Cada expedición se prepara con cuidado. Selecciona una fecha, cuéntanos quiénes son los observadores y el territorio te mostrará lo que necesitas ver.
-    </p>
-
-    <form class="form-nenemi reveal reveal-delay-2" id="form-solicitud" onsubmit="enviarSolicitud(event)">
-      <div class="form-grupo">
-        <label class="form-label">Nombre del observador</label>
-        <input class="form-input" type="text" placeholder="Tu nombre completo" required>
-      </div>
-      <div class="form-grupo">
-        <label class="form-label">Correo de contacto</label>
-        <input class="form-input" type="email" placeholder="tu@correo.com" required>
-      </div>
-      <div class="form-grupo">
-        <label class="form-label">Número de observadores</label>
-        <input class="form-input" type="number" min="1" max="12" placeholder="2" value="2">
-      </div>
-      <div class="form-grupo">
-        <label class="form-label">Nivel de experiencia</label>
-        <select class="form-select form-input">
-          <option value="">Seleccionar nivel</option>
-          <option value="estandar">Estándar — $850 MXN</option>
-          <option value="profunda">Profunda — $1,800 MXN</option>
-          <option value="ancestral">Ancestral — $3,400 MXN</option>
-        </select>
-      </div>
-
-      <!-- Calendario Visual -->
-      <div class="calendario-mini form-grupo ancho-completo">
-        <div class="cal-header">
-          <button type="button" class="cal-nav" id="cal-prev" onclick="cambiarMes(-1)">‹</button>
-          <div class="cal-mes" id="cal-titulo">Junio 2025</div>
-          <button type="button" class="cal-nav" id="cal-next" onclick="cambiarMes(1)">›</button>
+    <!-- Expedición 01 -->
+    <div class="exp-card activa" id="exp-0">
+      <div class="exp-card-img">
+        <!-- IMAGEN: Peña del Zumate, bosque mesófilo, niebla entre árboles altos -->
+        <div class="exp-card-img-placeholder">
+          <svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="rgba(232,220,198,0.2)" stroke-width="1.5"><rect x="3" y="3" width="18" height="18" rx="2"/><circle cx="8.5" cy="8.5" r="1.5"/><polyline points="21,15 16,10 5,21"/></svg>
+          <span style="font-size:0.52rem; letter-spacing:0.2em; text-transform:uppercase; color:rgba(232,220,198,0.18);">Peña del Zumate<br>Bosque mesófilo · Niebla</span>
         </div>
-        <div class="cal-dias-header">
-          <div class="cal-dia-letra">Do</div>
-          <div class="cal-dia-letra">Lu</div>
-          <div class="cal-dia-letra">Ma</div>
-          <div class="cal-dia-letra">Mi</div>
-          <div class="cal-dia-letra">Ju</div>
-          <div class="cal-dia-letra">Vi</div>
-          <div class="cal-dia-letra">Sá</div>
+        <div class="exp-img-badge">
+          <div class="exp-img-badge-num">Expedición 01</div>
         </div>
-        <div class="cal-grid" id="cal-grid"></div>
-        <div class="cal-leyenda">
-          <div class="cal-leyenda-item">
-            <div class="cal-leyenda-dot"></div>
-            Expedición disponible
+        <div class="exp-miniaturas">
+          <div class="exp-miniatura"></div>
+          <div class="exp-miniatura"></div>
+          <div class="exp-miniatura"></div>
+        </div>
+      </div>
+      <div class="exp-card-info">
+        <div class="exp-dificultad">
+          <div class="exp-dots">
+            <div class="exp-dot"></div><div class="exp-dot"></div><div class="exp-dot vacio"></div>
           </div>
-          <div class="cal-leyenda-item" style="opacity:0.5;">
-            <div class="cal-leyenda-dot" style="opacity:0.3;"></div>
-            No disponible
+          Nivel bajo–medio
+        </div>
+        <h3 class="exp-h3">El Corazón Verde de la Sierra</h3>
+        <div class="exp-tagline">Peña del Zumate — Donde el bosque respira</div>
+        <p class="exp-desc">Una inmersión profunda en los bosques templados que actúan como los pulmones de la región. Descubrirás la mecánica oculta del agua, cómo los árboles capturan la niebla y la biodiversidad que mantiene el equilibrio de la vida.</p>
+        <div class="exp-publico">
+          <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M23 21v-2a4 4 0 0 0-3-3.87"/><path d="M16 3.13a4 4 0 0 1 0 7.75"/></svg>
+          Ideal para: <strong>familias, parejas, grupos de amigos</strong>
+        </div>
+        <div class="exp-meta">
+          <div class="exp-meta-item">
+            <div class="exp-meta-label">Duración</div>
+            <div class="exp-meta-valor">6–7 horas</div>
+          </div>
+          <div class="exp-meta-item">
+            <div class="exp-meta-label">Terreno</div>
+            <div class="exp-meta-valor">Sendero bosque</div>
+          </div>
+          <div class="exp-meta-item">
+            <div class="exp-meta-label">Altitud</div>
+            <div class="exp-meta-valor">2,200–2,600 m</div>
           </div>
         </div>
-        <div id="cal-fecha-sel" style="text-align: center; font-family: var(--font-datos); font-size: 0.6rem; letter-spacing: 0.2em; color: var(--cobre-claro); margin-top: 0.8rem; min-height: 1.2em;"></div>
+        <div class="exp-incluye">
+          <div class="exp-item">
+            <svg class="exp-item-icon" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="2"><polyline points="3,8 6,11 13,4"/></svg>
+            Guía–naturalista especializado
+          </div>
+          <div class="exp-item">
+            <svg class="exp-item-icon" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="2"><polyline points="3,8 6,11 13,4"/></svg>
+            Interpretación ambiental
+          </div>
+          <div class="exp-item">
+            <svg class="exp-item-icon" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="2"><polyline points="3,8 6,11 13,4"/></svg>
+            Snack saludable + bebida artesanal
+          </div>
+          <div class="exp-item">
+            <svg class="exp-item-icon" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="2"><polyline points="3,8 6,11 13,4"/></svg>
+            Fotografía de recuerdo
+          </div>
+        </div>
+        <a href="https://wa.me/521XXXXXXXXXX?text=Quiero%20reservar%20la%20expedici%C3%B3n%20Coraz%C3%B3n%20Verde"
+           class="btn-exp-reservar" target="_blank">
+          Reservar esta expedición
+          <svg class="arrow-r" viewBox="0 0 16 16"><line x1="2" y1="8" x2="14" y2="8"/><polyline points="9,3 14,8 9,13"/></svg>
+        </a>
       </div>
+    </div>
 
-      <div class="form-grupo ancho-completo">
-        <label class="form-label">¿Qué te trae al territorio? (opcional)</label>
-        <textarea class="form-textarea" placeholder="Cuéntanos sobre tu interés: ecológico, artístico, científico, familiar…"></textarea>
+    <!-- Expedición 02 -->
+    <div class="exp-card" id="exp-1">
+      <div class="exp-card-img">
+        <!-- IMAGEN: Peña del Cuervo, formación rocosa, vista panorámica, bosque oyamel -->
+        <div class="exp-card-img-placeholder">
+          <svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="rgba(232,220,198,0.2)" stroke-width="1.5"><rect x="3" y="3" width="18" height="18" rx="2"/><circle cx="8.5" cy="8.5" r="1.5"/><polyline points="21,15 16,10 5,21"/></svg>
+          <span style="font-size:0.52rem; letter-spacing:0.2em; text-transform:uppercase; color:rgba(232,220,198,0.18);">Peña del Cuervo<br>Mineral del Chico · 2,770 m</span>
+        </div>
+        <div class="exp-img-badge">
+          <div class="exp-img-badge-num">Expedición 02</div>
+        </div>
+        <div class="exp-miniaturas">
+          <div class="exp-miniatura"></div>
+          <div class="exp-miniatura"></div>
+          <div class="exp-miniatura"></div>
+        </div>
       </div>
+      <div class="exp-card-info">
+        <div class="exp-dificultad">
+          <div class="exp-dots">
+            <div class="exp-dot"></div><div class="exp-dot"></div><div class="exp-dot"></div>
+          </div>
+          Nivel medio
+        </div>
+        <h3 class="exp-h3">La Cima que Sana</h3>
+        <div class="exp-tagline">Peña del Cuervo — Desde las alturas, la paz llega</div>
+        <p class="exp-desc">Al ascender a 2,770 metros, la atmósfera cambia. La roca gigante y el bosque de oyamel te envuelven en un silencio terapéutico. Geología viva, formaciones rocosas de millones de años y vistas panorámicas que resetean la mente.</p>
+        <div class="exp-publico">
+          <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M23 21v-2a4 4 0 0 0-3-3.87"/><path d="M16 3.13a4 4 0 0 1 0 7.75"/></svg>
+          Ideal para: <strong>familias con niños, parejas, primerizos</strong>
+        </div>
+        <div class="exp-meta">
+          <div class="exp-meta-item">
+            <div class="exp-meta-label">Duración</div>
+            <div class="exp-meta-valor">7–8 horas</div>
+          </div>
+          <div class="exp-meta-item">
+            <div class="exp-meta-label">Terreno</div>
+            <div class="exp-meta-valor">Roca y bosque</div>
+          </div>
+          <div class="exp-meta-item">
+            <div class="exp-meta-label">Altitud</div>
+            <div class="exp-meta-valor">Hasta 2,770 m</div>
+          </div>
+        </div>
+        <div class="exp-incluye">
+          <div class="exp-item">
+            <svg class="exp-item-icon" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="2"><polyline points="3,8 6,11 13,4"/></svg>
+            Kit Explorador para niños
+          </div>
+          <div class="exp-item">
+            <svg class="exp-item-icon" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="2"><polyline points="3,8 6,11 13,4"/></svg>
+            Snack + bebida probiótica
+          </div>
+          <div class="exp-item">
+            <svg class="exp-item-icon" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="2"><polyline points="3,8 6,11 13,4"/></svg>
+            Guía especializado en seguridad
+          </div>
+          <div class="exp-item">
+            <svg class="exp-item-icon" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="2"><polyline points="3,8 6,11 13,4"/></svg>
+            Foto de recuerdo en cima
+          </div>
+        </div>
+        <a href="https://wa.me/521XXXXXXXXXX?text=Quiero%20reservar%20la%20expedici%C3%B3n%20La%20Cima%20que%20Sana"
+           class="btn-exp-reservar" target="_blank">
+          Reservar esta expedición
+          <svg class="arrow-r" viewBox="0 0 16 16"><line x1="2" y1="8" x2="14" y2="8"/><polyline points="9,3 14,8 9,13"/></svg>
+        </a>
+      </div>
+    </div>
 
-      <button type="submit" class="form-submit">Enviar solicitud de fecha</button>
-    </form>
+    <!-- Expedición 03 -->
+    <div class="exp-card" id="exp-2">
+      <div class="exp-card-img">
+        <!-- IMAGEN: Diego Mateo, paisaje cultural, comunidad, agricultura de montaña -->
+        <div class="exp-card-img-placeholder">
+          <svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="rgba(232,220,198,0.2)" stroke-width="1.5"><rect x="3" y="3" width="18" height="18" rx="2"/><circle cx="8.5" cy="8.5" r="1.5"/><polyline points="21,15 16,10 5,21"/></svg>
+          <span style="font-size:0.52rem; letter-spacing:0.2em; text-transform:uppercase; color:rgba(232,220,198,0.18);">Diego Mateo<br>Patrimonio biocultural · Hidalgo</span>
+        </div>
+        <div class="exp-img-badge">
+          <div class="exp-img-badge-num">Expedición 03</div>
+        </div>
+        <div class="exp-miniaturas">
+          <div class="exp-miniatura"></div>
+          <div class="exp-miniatura"></div>
+          <div class="exp-miniatura"></div>
+        </div>
+      </div>
+      <div class="exp-card-info">
+        <div class="exp-dificultad">
+          <div class="exp-dots">
+            <div class="exp-dot"></div><div class="exp-dot vacio"></div><div class="exp-dot vacio"></div>
+          </div>
+          Nivel bajo
+        </div>
+        <h3 class="exp-h3">Raíces y Memorias</h3>
+        <div class="exp-tagline">Diego Mateo — Historia escrita en piedra y tierra</div>
+        <p class="exp-desc">Más que una caminata, un viaje al patrimonio biocultural de la región. Descubrirás cómo las comunidades han vivido en armonía con la montaña durante generaciones. El paisaje como archivo histórico.</p>
+        <div class="exp-publico">
+          <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M23 21v-2a4 4 0 0 0-3-3.87"/><path d="M16 3.13a4 4 0 0 1 0 7.75"/></svg>
+          Ideal para: <strong>fotógrafos, viajeros culturales, grupos pequeños</strong>
+        </div>
+        <div class="exp-meta">
+          <div class="exp-meta-item">
+            <div class="exp-meta-label">Duración</div>
+            <div class="exp-meta-valor">5–6 horas</div>
+          </div>
+          <div class="exp-meta-item">
+            <div class="exp-meta-label">Terreno</div>
+            <div class="exp-meta-valor">Camino rural</div>
+          </div>
+          <div class="exp-meta-item">
+            <div class="exp-meta-label">Altitud</div>
+            <div class="exp-meta-valor">1,800–2,200 m</div>
+          </div>
+        </div>
+        <div class="exp-incluye">
+          <div class="exp-item">
+            <svg class="exp-item-icon" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="2"><polyline points="3,8 6,11 13,4"/></svg>
+            Interpretación cultural local
+          </div>
+          <div class="exp-item">
+            <svg class="exp-item-icon" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="2"><polyline points="3,8 6,11 13,4"/></svg>
+            Snack artesanal tradicional
+          </div>
+          <div class="exp-item">
+            <svg class="exp-item-icon" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="2"><polyline points="3,8 6,11 13,4"/></svg>
+            Guía local con historia viva
+          </div>
+          <div class="exp-item">
+            <svg class="exp-item-icon" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="2"><polyline points="3,8 6,11 13,4"/></svg>
+            Sesión de fotografía de paisaje
+          </div>
+        </div>
+        <a href="https://wa.me/521XXXXXXXXXX?text=Quiero%20reservar%20la%20expedici%C3%B3n%20Ra%C3%ADces%20y%20Memorias"
+           class="btn-exp-reservar" target="_blank">
+          Reservar esta expedición
+          <svg class="arrow-r" viewBox="0 0 16 16"><line x1="2" y1="8" x2="14" y2="8"/><polyline points="9,3 14,8 9,13"/></svg>
+        </a>
+      </div>
+    </div>
 
-    <div id="form-gracias" style="display:none; padding: 2rem; text-align: center;">
-      <div style="font-family: var(--font-titulo); font-size: 1.5rem; font-style: italic; color: var(--beige-claro); margin-bottom: 0.8rem;">Recibido.</div>
-      <p style="font-family: var(--font-poema); font-style: italic; color: rgba(232,220,200,0.6);">El territorio te responderá en 24–48 horas.</p>
+    <!-- Expedición 04 -->
+    <div class="exp-card" id="exp-3">
+      <div class="exp-card-img">
+        <!-- IMAGEN: El Lucero de Omitlán, niebla densa, sendero boscoso, atmósfera mística -->
+        <div class="exp-card-img-placeholder">
+          <svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="rgba(232,220,198,0.2)" stroke-width="1.5"><rect x="3" y="3" width="18" height="18" rx="2"/><circle cx="8.5" cy="8.5" r="1.5"/><polyline points="21,15 16,10 5,21"/></svg>
+          <span style="font-size:0.52rem; letter-spacing:0.2em; text-transform:uppercase; color:rgba(232,220,198,0.18);">El Lucero · Omitlán<br>Niebla · Contemplación</span>
+        </div>
+        <div class="exp-img-badge">
+          <div class="exp-img-badge-num">Expedición 04</div>
+        </div>
+        <div class="exp-miniaturas">
+          <div class="exp-miniatura"></div>
+          <div class="exp-miniatura"></div>
+          <div class="exp-miniatura"></div>
+        </div>
+      </div>
+      <div class="exp-card-info">
+        <div class="exp-dificultad">
+          <div class="exp-dots">
+            <div class="exp-dot"></div><div class="exp-dot vacio"></div><div class="exp-dot vacio"></div>
+          </div>
+          Nivel bajo · Contemplativo
+        </div>
+        <h3 class="exp-h3">El Sueño de Niebla</h3>
+        <div class="exp-tagline">Omitlán — Caminar entre nubes, encontrar tu centro</div>
+        <p class="exp-desc">Una experiencia diseñada para la contemplación profunda. La niebla abraza el bosque y el tiempo se detiene. Camina con calma, respira el aire puro y observa cómo la luz juega entre los árboles centenarios.</p>
+        <div class="exp-publico">
+          <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M23 21v-2a4 4 0 0 0-3-3.87"/><path d="M16 3.13a4 4 0 0 1 0 7.75"/></svg>
+          Ideal para: <strong>parejas, fotógrafos de naturaleza, desconexión total</strong>
+        </div>
+        <div class="exp-meta">
+          <div class="exp-meta-item">
+            <div class="exp-meta-label">Duración</div>
+            <div class="exp-meta-valor">5–6 horas</div>
+          </div>
+          <div class="exp-meta-item">
+            <div class="exp-meta-label">Terreno</div>
+            <div class="exp-meta-valor">Sendero suave</div>
+          </div>
+          <div class="exp-meta-item">
+            <div class="exp-meta-label">Ritmo</div>
+            <div class="exp-meta-valor">Contemplativo</div>
+          </div>
+        </div>
+        <div class="exp-incluye">
+          <div class="exp-item">
+            <svg class="exp-item-icon" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="2"><polyline points="3,8 6,11 13,4"/></svg>
+            Guía de silencio y observación
+          </div>
+          <div class="exp-item">
+            <svg class="exp-item-icon" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="2"><polyline points="3,8 6,11 13,4"/></svg>
+            Bebida artesanal y snack calma
+          </div>
+          <div class="exp-item">
+            <svg class="exp-item-icon" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="2"><polyline points="3,8 6,11 13,4"/></svg>
+            Interpretación ambiental suave
+          </div>
+          <div class="exp-item">
+            <svg class="exp-item-icon" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="2"><polyline points="3,8 6,11 13,4"/></svg>
+            Fotografía de atmósfera y niebla
+          </div>
+        </div>
+        <a href="https://wa.me/521XXXXXXXXXX?text=Quiero%20reservar%20la%20expedici%C3%B3n%20Sue%C3%B1o%20de%20Niebla"
+           class="btn-exp-reservar" target="_blank">
+          Reservar esta expedición
+          <svg class="arrow-r" viewBox="0 0 16 16"><line x1="2" y1="8" x2="14" y2="8"/><polyline points="9,3 14,8 9,13"/></svg>
+        </a>
+      </div>
     </div>
   </div>
 </section>
 
-<!-- ============================================================
+<!-- =============================================
+     KIT CIENTÍFICO NIÑOS
+     ============================================= -->
+<section class="kit-ninos" id="kit-sec">
+  <div class="container">
+    <div class="kit-grid">
+      <div class="fade-up">
+        <div class="label-seccion">Para los más pequeños</div>
+        <h2 class="seccion-h2">Kit del <em>Explorador</em></h2>
+        <p class="seccion-p">
+          Cada niño que viene a NENEMI se convierte en naturalista por un día. Le entregamos un kit diseñado para observar, descubrir y registrar lo que el bosque tiene para mostrarle.
+        </p>
+        <div class="kit-items">
+          <div class="kit-item">
+            <div class="kit-item-emoji">🔍</div>
+            <div class="kit-item-titulo">Lupa de campo</div>
+            <div class="kit-item-desc">Para observar insectos, líquenes y detalles de roca que el ojo no alcanza.</div>
+          </div>
+          <div class="kit-item">
+            <div class="kit-item-emoji">📓</div>
+            <div class="kit-item-titulo">Bitácora NENEMI</div>
+            <div class="kit-item-desc">Cuaderno de campo para dibujar, anotar y guardar hojas y flores.</div>
+          </div>
+          <div class="kit-item">
+            <div class="kit-item-emoji">🌿</div>
+            <div class="kit-item-titulo">Guía de especies</div>
+            <div class="kit-item-desc">Ilustraciones de flora y fauna local para identificar durante la caminata.</div>
+          </div>
+          <div class="kit-item">
+            <div class="kit-item-emoji">🏅</div>
+            <div class="kit-item-titulo">Certificado NENEMI</div>
+            <div class="kit-item-desc">Al finalizar, cada niño recibe su diploma de "Guardián de la Montaña".</div>
+          </div>
+        </div>
+      </div>
+
+      <div class="kit-img fade-up d2">
+        <!-- IMAGEN: niños explorando bosque con lupa, o flat lay del kit sobre musgo/madera -->
+        <div class="que-es-img-placeholder" style="position:absolute;inset:0;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:0.8rem;opacity:0.2;">
+          <svg width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="rgba(232,220,198,0.5)" stroke-width="1.5"><rect x="3" y="3" width="18" height="18" rx="2"/><circle cx="8.5" cy="8.5" r="1.5"/><polyline points="21,15 16,10 5,21"/></svg>
+          <span style="font-family:var(--mono);font-size:0.6rem;letter-spacing:0.25em;text-transform:uppercase;color:rgba(232,220,198,0.4);text-align:center;">Fotografía<br>Niños · Kit explorador<br>Bosque Hidalgo</span>
+        </div>
+        <div class="kit-img-float">
+          <div class="label">Actividad incluida en</div>
+          <div class="texto">Expediciones 01 y 02</div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- =============================================
+     QUÉ INCLUYE + ALIMENTACIÓN
+     ============================================= -->
+<section class="incluye" id="incluye-sec">
+  <div class="container">
+    <div class="seccion-header fade-up" style="max-width:500px; margin-bottom:0;">
+      <div class="label-seccion">El compromiso NENEMI</div>
+      <h2 class="seccion-h2">¿Qué <em>incluye</em> cada expedición?</h2>
+    </div>
+
+    <div class="incluye-grid">
+      <div class="incluye-lista fade-up d1">
+        <div class="incluye-item">
+          <div class="incluye-check"><svg viewBox="0 0 10 10"><polyline points="2,5 4,7 8,3"/></svg></div>
+          <div class="incluye-texto"><strong>Guía especializado</strong> con formación en biología, geología o historia</div>
+        </div>
+        <div class="incluye-item">
+          <div class="incluye-check"><svg viewBox="0 0 10 10"><polyline points="2,5 4,7 8,3"/></svg></div>
+          <div class="incluye-texto"><strong>Interpretación ambiental</strong> en cada parada del recorrido</div>
+        </div>
+        <div class="incluye-item">
+          <div class="incluye-check"><svg viewBox="0 0 10 10"><polyline points="2,5 4,7 8,3"/></svg></div>
+          <div class="incluye-texto"><strong>Transporte local</strong> desde el punto de encuentro (consultar)</div>
+        </div>
+        <div class="incluye-item">
+          <div class="incluye-check"><svg viewBox="0 0 10 10"><polyline points="2,5 4,7 8,3"/></svg></div>
+          <div class="incluye-texto"><strong>Kit de explorador</strong> para niños (lupa, bitácora, guía)</div>
+        </div>
+        <div class="incluye-item">
+          <div class="incluye-check"><svg viewBox="0 0 10 10"><polyline points="2,5 4,7 8,3"/></svg></div>
+          <div class="incluye-texto"><strong>Snack saludable</strong> y bebida artesanal de la región</div>
+        </div>
+        <div class="incluye-item">
+          <div class="incluye-check"><svg viewBox="0 0 10 10"><polyline points="2,5 4,7 8,3"/></svg></div>
+          <div class="incluye-texto"><strong>Botiquín de primeros auxilios</strong> y protocolo de seguridad</div>
+        </div>
+        <div class="incluye-item">
+          <div class="incluye-check"><svg viewBox="0 0 10 10"><polyline points="2,5 4,7 8,3"/></svg></div>
+          <div class="incluye-texto"><strong>Grupos reducidos</strong> — máximo 8 personas por expedición</div>
+        </div>
+        <div class="incluye-item">
+          <div class="incluye-check"><svg viewBox="0 0 10 10"><polyline points="2,5 4,7 8,3"/></svg></div>
+          <div class="incluye-texto"><strong>Fotografía de recuerdo</strong> en puntos panorámicos clave</div>
+        </div>
+      </div>
+
+      <div class="alimentacion-box fade-up d2">
+        <div class="alimentacion-titulo">Alimentación Consciente</div>
+        <div class="alimentacion-sub">Nutrirse también es parte de la experiencia. Todo lo que llevamos viene de productores locales o artesanos de la región.</div>
+        <div class="alimentacion-items">
+          <div class="alim-item"><span class="alim-emoji">🍎</span> Fruta fresca de temporada</div>
+          <div class="alim-item"><span class="alim-emoji">🌰</span> Mezcla de nueces y semillas</div>
+          <div class="alim-item"><span class="alim-emoji">☕</span> Café artesanal de la sierra</div>
+          <div class="alim-item"><span class="alim-emoji">🫙</span> Bebida probiótica natural</div>
+          <div class="alim-item"><span class="alim-emoji">🥙</span> Lunch campestre (Nivel II)</div>
+          <div class="alim-item"><span class="alim-emoji">🍵</span> Infusiones locales de montaña</div>
+        </div>
+        <div class="dietas">
+          <span class="dieta-tag">✓ Vegetariano</span>
+          <span class="dieta-tag">✓ Vegano</span>
+          <span class="dieta-tag">✓ Sin gluten (avisar)</span>
+          <span class="dieta-tag">✓ Adaptado niños</span>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- =============================================
+     TESTIMONIOS
+     ============================================= -->
+<section class="testimonios" id="testimonios-sec">
+  <div class="container">
+    <div class="label-seccion fade-up">Lo que dicen quienes fueron</div>
+    <h2 class="seccion-h2 fade-up d1">Opiniones de <em>observadores</em></h2>
+    <div class="test-grid">
+
+      <div class="test-card fade-up d1">
+        <div class="test-estrellas">★★★★★</div>
+        <div class="test-texto">"Llevé a mis hijos de 8 y 11 años. Fue la primera vez que los vi apagar el teléfono solos. La guía les explicó la geología de forma que los dejó con la boca abierta. Regresamos completamente recargados."</div>
+        <div class="test-autor">
+          <div class="test-avatar">MR</div>
+          <div>
+            <div class="test-nombre">Marisol R.</div>
+            <div class="test-origen">Ciudad de México · Expedición 02</div>
+          </div>
+        </div>
+      </div>
+
+      <div class="test-card fade-up d2">
+        <div class="test-estrellas">★★★★★</div>
+        <div class="test-texto">"Vine buscando una escapada de fin de semana y encontré algo que no esperaba: entender por primera vez cómo funciona un bosque. La experiencia fue científica, contemplativa y profundamente relajante a la vez."</div>
+        <div class="test-autor">
+          <div class="test-avatar">AH</div>
+          <div>
+            <div class="test-nombre">Andrés H.</div>
+            <div class="test-origen">Pachuca · Expedición 01</div>
+          </div>
+        </div>
+      </div>
+
+      <div class="test-card fade-up d3">
+        <div class="test-estrellas">★★★★★</div>
+        <div class="test-texto">"La niebla entre los árboles al amanecer es algo que no se olvida. El guía sabía exactamente cuándo hablar y cuándo dejar que el silencio lo dijera todo. Lo recomiendo para cualquier pareja que quiera reconectarse."</div>
+        <div class="test-autor">
+          <div class="test-avatar">LV</div>
+          <div>
+            <div class="test-nombre">Laura V.</div>
+            <div class="test-origen">CDMX · Expedición 04</div>
+          </div>
+        </div>
+      </div>
+
+    </div>
+  </div>
+</section>
+
+<!-- =============================================
+     GALERÍA
+     ============================================= -->
+<section class="galeria">
+  <div class="container">
+    <div class="label-seccion fade-up">El territorio en imágenes</div>
+    <h2 class="seccion-h2 fade-up d1">Lo que <em>verás</em></h2>
+    <div class="gal-grid fade-up d2">
+      <!-- IMAGEN 1 (grande): Familia caminando en sendero boscoso con niebla -->
+      <div class="gal-item"><div class="gal-placeholder"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1"><rect x="3" y="3" width="18" height="18" rx="2"/><circle cx="8.5" cy="8.5" r="1.5"/><polyline points="21,15 16,10 5,21"/></svg><span>Familias · Sendero</span></div></div>
+      <!-- IMAGEN 2: Niños con lupa observando -->
+      <div class="gal-item" style="background:var(--verde-mid);"><div class="gal-placeholder"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1"><rect x="3" y="3" width="18" height="18" rx="2"/><circle cx="8.5" cy="8.5" r="1.5"/><polyline points="21,15 16,10 5,21"/></svg><span>Niños · Kit</span></div></div>
+      <!-- IMAGEN 3: Vista panorámica niebla -->
+      <div class="gal-item" style="background:var(--gris-roca, #3a3832);"><div class="gal-placeholder"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1"><rect x="3" y="3" width="18" height="18" rx="2"/><circle cx="8.5" cy="8.5" r="1.5"/><polyline points="21,15 16,10 5,21"/></svg><span>Niebla · Panorámica</span></div></div>
+      <!-- IMAGEN 4: Pareja en sendero -->
+      <div class="gal-item" style="background:var(--verde);"><div class="gal-placeholder"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1"><rect x="3" y="3" width="18" height="18" rx="2"/><circle cx="8.5" cy="8.5" r="1.5"/><polyline points="21,15 16,10 5,21"/></svg><span>Parejas · Sendero</span></div></div>
+      <!-- IMAGEN 5: Guía con grupo -->
+      <div class="gal-item" style="background:var(--verde-noche);"><div class="gal-placeholder"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1"><rect x="3" y="3" width="18" height="18" rx="2"/><circle cx="8.5" cy="8.5" r="1.5"/><polyline points="21,15 16,10 5,21"/></svg><span>Guía · Grupo</span></div></div>
+      <!-- IMAGEN 6 (ancha): Detalle musgo/roca volcánica / formación natural -->
+      <div class="gal-item" style="background:var(--tierra, #7a6245);"><div class="gal-placeholder"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1"><rect x="3" y="3" width="18" height="18" rx="2"/><circle cx="8.5" cy="8.5" r="1.5"/><polyline points="21,15 16,10 5,21"/></svg><span>Roca · Geología</span></div></div>
+    </div>
+  </div>
+</section>
+
+<!-- =============================================
+     LOGÍSTICA CDMX
+     ============================================= -->
+<section class="logistica">
+  <div class="container">
+    <div class="logistica-inner fade-up">
+      <div style="display:flex; align-items:center; gap:1.5rem; flex-wrap:wrap;">
+        <div class="logistica-ciudad">
+          <div class="ciudad-nombre">Ciudad de México</div>
+          <div class="ciudad-distancia">Punto de salida</div>
+        </div>
+        <div class="logistica-flecha">
+          ——————→
+        </div>
+        <div class="logistica-ciudad">
+          <div class="ciudad-nombre">Hidalgo</div>
+          <div class="ciudad-distancia" style="color:var(--musgo);">~2 horas · Carretera</div>
+        </div>
+      </div>
+      <div class="logistica-info">
+        <p>
+          Nuestras expediciones parten desde puntos acordados previamente. El acceso a las rutas se hace en vehículo propio o coordinado con el grupo. <strong>El punto exacto de encuentro se comparte al confirmar tu reserva.</strong>
+        </p>
+        <p style="margin-top:0.7rem;">
+          ¿Tienes dudas de cómo llegar? <strong>Escríbenos por WhatsApp</strong> y te orientamos con todo el detalle logístico.
+        </p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- =============================================
+     CTA FINAL
+     ============================================= -->
+<section class="cta-final">
+  <div class="container" style="position:relative; z-index:1;">
+    <div class="label-seccion fade-up" style="justify-content:center;">El siguiente paso</div>
+    <h2 class="cta-final-h2 fade-up d1">
+      ¿Listo para<br>
+      respirar más <em>despacio?</em>
+    </h2>
+    <p class="cta-final-p fade-up d2">
+      Reserva tu expedición hoy. Grupos desde 2 personas. Sin experiencia previa necesaria. Solo ganas de caminar y descubrir.
+    </p>
+    <div class="cta-final-btns fade-up d3">
+      <a href="#expediciones-sec" class="btn-primario" style="color:var(--negro); background:var(--crema);">
+        Ver todas las expediciones
+        <svg class="arrow-r" viewBox="0 0 16 16"><line x1="2" y1="8" x2="14" y2="8"/><polyline points="9,3 14,8 9,13"/></svg>
+      </a>
+      <a href="https://wa.me/521XXXXXXXXXX?text=Quiero%20reservar%20una%20expedici%C3%B3n%20Nenemi"
+         class="btn-whatsapp"
+         style="border-color:rgba(255,255,255,0.2);"
+         target="_blank">
+        <svg viewBox="0 0 24 24" fill="currentColor" width="17" height="17"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413z"/></svg>
+        Contactar por WhatsApp
+      </a>
+    </div>
+  </div>
+</section>
+
+<!-- =============================================
      FOOTER
-     ============================================================ -->
+     ============================================= -->
 <footer>
-  <div class="footer-grid">
-    <div class="footer-marca">
-      <h3>NENEMI</h3>
-      <div class="footer-sub">Caminar la Montaña Viva</div>
-      <p>Expediciones bioculturales en los territorios volcánicos y boscosos de Hidalgo, México. No turismo. Observación profunda del paisaje vivo.</p>
+  <div class="container">
+    <div class="footer-grid">
+      <div>
+        <div class="footer-logo">NENEMI</div>
+        <div class="footer-logo-sub">Expediciones Bioculturales · Hidalgo</div>
+        <div class="footer-bio">
+          Exploramos los bosques y territorios de Hidalgo desde una mirada ecológica, científica y cultural. No hacemos turismo convencional. Creamos experiencias que transforman la manera de ver el entorno natural.
+        </div>
+      </div>
+      <div>
+        <div class="footer-col-h">Expediciones</div>
+        <ul class="footer-col-links">
+          <li><a href="#exp-0" onclick="mostrarExp(0,document.querySelectorAll('.exp-tab')[0])">El Corazón Verde</a></li>
+          <li><a href="#exp-1" onclick="mostrarExp(1,document.querySelectorAll('.exp-tab')[1])">La Cima que Sana</a></li>
+          <li><a href="#exp-2" onclick="mostrarExp(2,document.querySelectorAll('.exp-tab')[2])">Raíces y Memorias</a></li>
+          <li><a href="#exp-3" onclick="mostrarExp(3,document.querySelectorAll('.exp-tab')[3])">El Sueño de Niebla</a></li>
+        </ul>
+      </div>
+      <div>
+        <div class="footer-col-h">Para quién</div>
+        <ul class="footer-col-links">
+          <li><a href="#">Familias con niños</a></li>
+          <li><a href="#">Parejas</a></li>
+          <li><a href="#">Grupos de amigos</a></li>
+          <li><a href="#">Fotógrafos</a></li>
+        </ul>
+      </div>
+      <div>
+        <div class="footer-col-h">Contacto</div>
+        <ul class="footer-col-links">
+          <li><a href="https://wa.me/521XXXXXXXXXX" target="_blank">WhatsApp</a></li>
+          <li><a href="mailto:hola@nenemi.mx">hola@nenemi.mx</a></li>
+          <li><a href="#">Instagram</a></li>
+          <li><a href="#">Hidalgo, México</a></li>
+        </ul>
+      </div>
     </div>
-    <div class="footer-col">
-      <h4>Explorar</h4>
-      <ul>
-        <li><a href="#expediciones-sec">Expediciones</a></li>
-        <li><a href="#campo-sec">Territorio</a></li>
-        <li><a href="#blog-sec">Divulgación</a></li>
-        <li><a href="#precios-sec">Niveles</a></li>
-      </ul>
+    <div class="footer-bottom">
+      <div class="footer-copy">© 2025 NENEMI · Expediciones Bioculturales</div>
+      <div class="footer-nahuatl">Nenemi — "el que camina" · Náhuatl</div>
     </div>
-    <div class="footer-col">
-      <h4>Observadores</h4>
-      <ul>
-        <li><a href="#">Familias y niños</a></li>
-        <li><a href="#">Grupos científicos</a></li>
-        <li><a href="#">Artistas del territorio</a></li>
-        <li><a href="#">Educadores</a></li>
-      </ul>
-    </div>
-    <div class="footer-col">
-      <h4>Contacto</h4>
-      <ul>
-        <li><a href="mailto:hola@nenemi.mx">hola@nenemi.mx</a></li>
-        <li><a href="#">Hidalgo, México</a></li>
-        <li><a href="#">Instagram</a></li>
-        <li><a href="#cta-sec">Solicitar fecha</a></li>
-      </ul>
-    </div>
-  </div>
-  <div class="footer-bottom">
-    <div class="footer-copy">© 2025 NENEMI · Expediciones Bioculturales · Hidalgo, México</div>
-    <div class="footer-nahuatl">Nenemi — "el que camina" · Náhuatl</div>
   </div>
 </footer>
 
-<!-- ============================================================
+<!-- =============================================
      JAVASCRIPT
-     ============================================================ -->
+     ============================================= -->
 <script>
-/* ============================================================
-   NAVEGACIÓN — scroll behavior
-   ============================================================ */
-const nav = document.getElementById('nav-principal');
+/* --- Nav scroll --- */
+const nav = document.getElementById('nav');
 window.addEventListener('scroll', () => {
-  if (window.scrollY > 60) nav.classList.add('scrolled');
-  else nav.classList.remove('scrolled');
+  nav.classList.toggle('scrolled', window.scrollY > 60);
 }, { passive: true });
 
-/* ============================================================
-   PARALLAX suave en el hero
-   ============================================================ */
-const parallaxEl = document.getElementById('parallax-hero');
+/* --- Tabs expediciones --- */
+function mostrarExp(index, tabEl) {
+  document.querySelectorAll('.exp-card').forEach((c, i) => {
+    c.classList.toggle('activa', i === index);
+  });
+  document.querySelectorAll('.exp-tab').forEach((t, i) => {
+    t.classList.toggle('activo', i === index);
+  });
+}
+
+/* --- Intersection Observer (fade-up) --- */
+const fadeEls = document.querySelectorAll('.fade-up');
+const io = new IntersectionObserver((entries) => {
+  entries.forEach(e => { if (e.isIntersecting) e.target.classList.add('in'); });
+}, { threshold: 0.1, rootMargin: '0px 0px -30px 0px' });
+fadeEls.forEach(el => io.observe(el));
+
+/* --- Hero parallax suave --- */
+const heroBg = document.querySelector('.hero-bg');
 window.addEventListener('scroll', () => {
-  const scrollY = window.scrollY;
-  if (scrollY < window.innerHeight * 1.5) {
-    parallaxEl.style.transform = `translateY(${scrollY * 0.25}px)`;
-    parallaxEl.style.opacity = 1 - scrollY / (window.innerHeight * 0.85);
+  const y = window.scrollY;
+  if (y < window.innerHeight * 1.5) {
+    heroBg.style.transform = `translateY(${y * 0.3}px)`;
   }
 }, { passive: true });
-
-/* ============================================================
-   MODO SILENCIO
-   ============================================================ */
-const btnSilencio = document.getElementById('btn-silencio');
-let modoSilencio = false;
-
-btnSilencio.addEventListener('click', () => {
-  modoSilencio = !modoSilencio;
-  document.body.classList.toggle('silencio', modoSilencio);
-  btnSilencio.classList.toggle('activo', modoSilencio);
-  btnSilencio.textContent = modoSilencio ? '◉ Despertar' : '◯ Silencio';
-});
-
-/* ============================================================
-   ANIMACIONES DE ENTRADA (Intersection Observer)
-   ============================================================ */
-const revealEls = document.querySelectorAll('.reveal');
-const observer = new IntersectionObserver((entries) => {
-  entries.forEach(entry => {
-    if (entry.isIntersecting) {
-      entry.target.classList.add('visible');
-    }
-  });
-}, { threshold: 0.12, rootMargin: '0px 0px -40px 0px' });
-
-revealEls.forEach(el => observer.observe(el));
-
-/* ============================================================
-   MAPA INTERACTIVO — Puntos y tarjetas
-   ============================================================ */
-const puntos = document.querySelectorAll('.punto-mapa');
-const tarjetasMap = {
-  '1': 'tarjeta-1',
-  '2': 'tarjeta-2',
-  '3': 'tarjeta-3'
-};
-
-puntos.forEach(punto => {
-  punto.addEventListener('click', (e) => {
-    const id = punto.getAttribute('data-id');
-    const tarjetaId = tarjetasMap[id];
-    
-    // Cerrar todas las tarjetas
-    document.querySelectorAll('.tarjeta-campo').forEach(t => {
-      t.classList.remove('visible');
-    });
-    
-    // Abrir la tarjeta correspondiente
-    const tarjeta = document.getElementById(tarjetaId);
-    if (tarjeta) {
-      setTimeout(() => tarjeta.classList.add('visible'), 50);
-    }
-  });
-});
-
-function cerrarTarjeta(id) {
-  const tarjeta = document.getElementById(id);
-  if (tarjeta) tarjeta.classList.remove('visible');
-}
-
-// Cerrar tarjetas al hacer clic fuera
-document.addEventListener('click', (e) => {
-  if (!e.target.closest('.punto-mapa') && !e.target.closest('.tarjeta-campo')) {
-    document.querySelectorAll('.tarjeta-campo').forEach(t => {
-      t.classList.remove('visible');
-    });
-  }
-});
-
-/* ============================================================
-   CALENDARIO VISUAL
-   ============================================================ */
-const meses = ['Enero','Febrero','Marzo','Abril','Mayo','Junio','Julio','Agosto','Septiembre','Octubre','Noviembre','Diciembre'];
-// Fechas de expedición disponibles (día del mes) — personalizar con fechas reales
-const expedicionDias = [7, 14, 15, 21, 22, 28];
-
-let calFecha = new Date();
-calFecha.setDate(1);
-let diaSeleccionado = null;
-
-function renderCalendario() {
-  const titulo = document.getElementById('cal-titulo');
-  const grid = document.getElementById('cal-grid');
-  
-  titulo.textContent = `${meses[calFecha.getMonth()]} ${calFecha.getFullYear()}`;
-  
-  const primerDia = new Date(calFecha.getFullYear(), calFecha.getMonth(), 1).getDay();
-  const diasMes = new Date(calFecha.getFullYear(), calFecha.getMonth() + 1, 0).getDate();
-  const hoy = new Date();
-  
-  grid.innerHTML = '';
-  
-  // Celdas vacías al inicio
-  for (let i = 0; i < primerDia; i++) {
-    const celda = document.createElement('div');
-    celda.className = 'cal-celda vacio';
-    grid.appendChild(celda);
-  }
-  
-  for (let dia = 1; dia <= diasMes; dia++) {
-    const celda = document.createElement('div');
-    celda.textContent = dia;
-    
-    const fechaCelda = new Date(calFecha.getFullYear(), calFecha.getMonth(), dia);
-    const esPasado = fechaCelda < hoy && fechaCelda.toDateString() !== hoy.toDateString();
-    const esExpedicion = expedicionDias.includes(dia);
-    
-    if (esPasado) {
-      celda.className = 'cal-celda pasado';
-    } else if (esExpedicion) {
-      celda.className = 'cal-celda expedicion disponible';
-      celda.title = 'Expedición disponible';
-    } else {
-      celda.className = 'cal-celda disponible';
-    }
-    
-    if (diaSeleccionado && 
-        diaSeleccionado.getDate() === dia && 
-        diaSeleccionado.getMonth() === calFecha.getMonth() && 
-        diaSeleccionado.getFullYear() === calFecha.getFullYear()) {
-      celda.classList.add('seleccionado');
-    }
-    
-    celda.addEventListener('click', () => {
-      if (esPasado) return;
-      diaSeleccionado = new Date(calFecha.getFullYear(), calFecha.getMonth(), dia);
-      
-      document.querySelectorAll('.cal-celda').forEach(c => c.classList.remove('seleccionado'));
-      celda.classList.add('seleccionado');
-      
-      const nombreMes = meses[diaSeleccionado.getMonth()];
-      const sel = document.getElementById('cal-fecha-sel');
-      sel.textContent = `Fecha seleccionada: ${dia} de ${nombreMes} de ${diaSeleccionado.getFullYear()}`;
-    });
-    
-    grid.appendChild(celda);
-  }
-}
-
-function cambiarMes(dir) {
-  calFecha.setMonth(calFecha.getMonth() + dir);
-  renderCalendario();
-}
-
-renderCalendario();
-
-/* ============================================================
-   FORMULARIO
-   ============================================================ */
-function enviarSolicitud(e) {
-  e.preventDefault();
-  // En producción: conectar con Formspree, Netlify Forms o backend propio
-  // fetch('/api/solicitud', { method: 'POST', body: new FormData(e.target) })
-  document.getElementById('form-solicitud').style.display = 'none';
-  document.getElementById('form-gracias').style.display = 'block';
-}
-
-/* ============================================================
-   ANIMACIÓN INICIAL — Hero entrada
-   ============================================================ */
-document.addEventListener('DOMContentLoaded', () => {
-  const heroEl = document.querySelector('.hero-contenido');
-  heroEl.style.opacity = '0';
-  heroEl.style.transform = 'translateY(20px)';
-  setTimeout(() => {
-    heroEl.style.transition = 'opacity 1.4s cubic-bezier(0.16, 1, 0.3, 1), transform 1.4s cubic-bezier(0.16, 1, 0.3, 1)';
-    heroEl.style.opacity = '1';
-    heroEl.style.transform = 'translateY(0)';
-  }, 300);
-});
 </script>
 </body>
 </html>
