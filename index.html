@@ -9,41 +9,40 @@
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,500;1,400;1,500&family=DM+Sans:ital,opsz,wght@0,9..40,300;0,9..40,400;0,9..40,500;1,9..40,300&family=Roboto+Mono:wght@300;400&display=swap" rel="stylesheet">
-<head>
-  <!-- ... (tus otras etiquetas meta y title) ... -->
-  
-  <!-- ESTILOS PARA LA GALERÍA (Copia y pega esto) -->
-  <style>
-    /* Hace que las imágenes llenen sus espacios */
-    .gal-item {
-      position: relative;
-      overflow: hidden;
-      border-radius: 8px;
-    }
-    
-    .gal-item img {
-      width: 100%;
-      height: 100%;
-      object-fit: cover; /* La magia: recorta para llenar sin deformar */
-      display: block;
-      transition: transform 0.3s ease;
-    }
-    
-    .gal-item:hover img {
-      transform: scale(1.05); /* Efecto zoom suave al pasar el mouse */
-    }
-    
-    /* Ajuste para la imagen 7 si el grid se rompe */
-    @media (min-width: 768px) {
-      .gal-grid {
-        display: grid;
-        grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
-        gap: 15px;
-      }
-    }
-  </style>
-  <!-- Fin de los estilos -->
 
+<!-- ESTILOS DE GALERÍA (CORREGIDOS Y FORZADOS) -->
+<style>
+  /* Forzamos la altura de las celdas de la galería */
+  .gal-item {
+    position: relative !important;
+    overflow: hidden !important;
+    border-radius: 8px !important;
+    height: 280px !important; /* Altura fija para que todas sean iguales */
+    min-height: 200px;
+  }
+
+  /* Forzamos que la imagen ocupe todo el espacio y no se deforme */
+  .gal-item img {
+    width: 100% !important;
+    height: 100% !important;
+    object-fit: cover !important; /* Recorta para llenar */
+    display: block !important;
+    transition: transform 0.4s ease !important;
+  }
+
+  /* Efecto zoom al pasar el mouse */
+  .gal-item:hover img {
+    transform: scale(1.06) !important;
+  }
+
+  /* Ajuste de la cuadrícula */
+  .gal-grid {
+    display: grid !important;
+    grid-template-columns: repeat(auto-fill, minmax(280px, 1fr)) !important;
+    gap: 1.5rem !important;
+  }
+</style>
+<!-- FIN ESTILOS GALERÍA -->
 
 <style>
 /* ==================================================
