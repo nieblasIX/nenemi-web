@@ -10,36 +10,42 @@
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,500;1,400;1,500&family=DM+Sans:ital,opsz,wght@0,9..40,300;0,9..40,400;0,9..40,500;1,9..40,300&family=Roboto+Mono:wght@300;400&display=swap" rel="stylesheet">
 
-<!-- ESTILOS DE GALERÍA (CORREGIDOS Y FORZADOS) -->
+<!-- ESTILOS DE GALERÍA (VER COMPLETA - SIN RECORTES) -->
 <style>
-  /* Forzamos la altura de las celdas de la galería */
+  /* La caja de la imagen se ajusta a la foto, pero tiene un tamaño máximo */
   .gal-item {
-    position: relative !important;
-    overflow: hidden !important;
-    border-radius: 8px !important;
-    height: 280px !important; /* Altura fija para que todas sean iguales */
-    min-height: 200px;
+    position: relative;
+    overflow: hidden;
+    border-radius: 8px;
+    /* Quitamos la altura fija para que se adapte, pero le damos un mínimo */
+    min-height: 200px; 
+    height: auto; 
+    display: flex;
+    align-items: center;
+    justify-content: center;
   }
 
-  /* Forzamos que la imagen ocupe todo el espacio y no se deforme */
+  /* La imagen se ve completa, sin deformarse ni recortarse */
   .gal-item img {
-    width: 100% !important;
-    height: 100% !important;
-    object-fit: cover !important; /* Recorta para llenar */
-    display: block !important;
-    transition: transform 0.4s ease !important;
+    width: 100%;
+    height: auto; /* Esto es clave: mantiene la proporción original */
+    object-fit: contain; /* Muestra la imagen completa dentro de la caja */
+    display: block;
+    border-radius: 8px;
+    transition: transform 0.4s ease;
+    margin: 0 auto;
   }
 
-  /* Efecto zoom al pasar el mouse */
+  /* Efecto zoom suave */
   .gal-item:hover img {
-    transform: scale(1.06) !important;
+    transform: scale(1.03);
   }
 
-  /* Ajuste de la cuadrícula */
+  /* Ajuste de la cuadrícula flexible */
   .gal-grid {
-    display: grid !important;
-    grid-template-columns: repeat(auto-fill, minmax(280px, 1fr)) !important;
-    gap: 1.5rem !important;
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+    gap: 1.5rem;
   }
 </style>
 <!-- FIN ESTILOS GALERÍA -->
