@@ -10,50 +10,6 @@
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,500;1,400;1,500&family=DM+Sans:ital,opsz,wght@0,9..40,300;0,9..40,400;0,9..40,500;1,9..40,300&family=Roboto+Mono:wght@300;400&display=swap" rel="stylesheet">
 
-<!-- ESTILOS GALERÍA (CORREGIDO: COLUMNAS ANCHAS Y EQUILIBRADAS) -->
-<style>
-  /* Contenedor de la cuadrícula */
-  .gal-grid {
-    display: grid;
-    /* 
-       ¡Aquí está la clave! 
-       repeat(auto-fit, minmax(300px, 1fr)) significa:
-       "Crea tantas columnas como quepan, pero que cada una mida AL MENOS 300px".
-       Esto evita columnas delgadas.
-    */
-    grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
-    gap: 1.5rem; /* Espacio entre fotos */
-    width: 100%;
-  }
-
-  /* Cada tarjeta de imagen */
-  .gal-item {
-    position: relative;
-    overflow: hidden;
-    border-radius: 8px;
-    background: #141610; /* Fondo oscuro para espacios vacíos */
-    min-height: 250px; /* Altura mínima para que no se aplasten */
-    height: 300px; /* Altura fija para uniformidad (opcional, pero recomendado) */
-    display: flex;
-    align-items: center;
-    justify-content: center;
-  }
-
-  /* La imagen dentro de la tarjeta */
-  .gal-item img {
-    width: 100%;
-    height: 100%;
-    object-fit: cover; /* Recorta para llenar el cuadro perfecto */
-    display: block;
-    transition: transform 0.4s ease;
-  }
-
-  /* Efecto zoom al pasar el mouse */
-  .gal-item:hover img {
-    transform: scale(1.05);
-  }
-</style>
-<!-- FIN ESTILOS -->
 
 <style>
 /* ==================================================
@@ -2099,13 +2055,11 @@ footer {
           </div>
         </div>
       </div>
-
       <div class="kit-img fade-up d2">
-        <!-- IMAGEN: niños explorando bosque con lupa, o flat lay del kit sobre musgo/madera -->
-        <div class="que-es-img-placeholder" style="position:absolute;inset:0;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:0.8rem;opacity:0.2;">
-          <svg width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="rgba(232,220,198,0.5)" stroke-width="1.5"><rect x="3" y="3" width="18" height="18" rx="2"/><circle cx="8.5" cy="8.5" r="1.5"/><polyline points="21,15 16,10 5,21"/></svg>
-          <span style="font-family:var(--mono);font-size:0.6rem;letter-spacing:0.25em;text-transform:uppercase;color:rgba(232,220,198,0.4);text-align:center;">Fotografía<br>Niños · Kit explorador<br>Bosque Hidalgo</span>
-        </div>
+        <!-- Imagen reemplazada: honginin.jpg -->
+        <img src="img/honginin.jpg" alt="Niños explorando bosque" class="kit-img-real">
+        
+        <!-- Badge flotante (se mantiene igual) -->
         <div class="kit-img-float">
           <div class="label">Actividad incluida en</div>
           <div class="texto">Expediciones 01 y 02</div>
@@ -2269,20 +2223,6 @@ footer {
       <!-- IMAGEN 6 (ancha): verd1.jpg -->
       <div class="gal-item">
         <img src="img/verd1.jpg" alt="Detalle de musgo y formación rocosa" class="gal-img">
-      </div>
-
-      <!-- NUEVA IMAGEN 7: zum.jpg -->
-      <div class="gal-item">
-        <img src="img/zum.jpg" alt="Peña del Zumate, formación rocosa y bosque" class="gal-img">
-      </div>
-
-            <!-- NUEVA IMAGEN 8:  -->
-      <div class="gal-item">
-        <img src="img/roca1.jpg" alt="Peña del Zumate" class="gal-img">
-      </div>
-            <!-- NUEVA IMAGEN 9:  -->
-      <div class="gal-item">
-        <img src="img/flor1.jpg" alt="Peña del Zumate" class="gal-img">
       </div>
 
     </div>
