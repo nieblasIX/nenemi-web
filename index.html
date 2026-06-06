@@ -10,47 +10,47 @@
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,500;1,400;1,500&family=DM+Sans:ital,opsz,wght@0,9..40,300;0,9..40,400;0,9..40,500;1,9..40,300&family=Roboto+Mono:wght@300;400&display=swap" rel="stylesheet">
 
-<!-- ESTILOS DE GALERÍA (VER COMPLETA - SIN RECORTES) -->
+<!-- ESTILOS DE GALERÍA (OPTIMIZADOS: FONDO + SIN RECORTES) -->
 <style>
-  /* La caja de la imagen se ajusta a la foto, pero tiene un tamaño máximo */
+  /* Caja con fondo del sitio para que los huecos no se vean feos */
   .gal-item {
     position: relative;
     overflow: hidden;
     border-radius: 8px;
-    /* Quitamos la altura fija para que se adapte, pero le damos un mínimo */
-    min-height: 200px; 
-    height: auto; 
+    min-height: 240px; /* Altura mínima para que no colapsen */
+    height: auto;
     display: flex;
     align-items: center;
     justify-content: center;
+    background-color: var(--carbon); /* ¡Aquí está la magia! Usa el color de fondo de tu sitio */
+    border: 1px solid rgba(232,220,198,0.1); /* Borde sutil opcional */
   }
 
-  /* La imagen se ve completa, sin deformarse ni recortarse */
+  /* Imagen completa y sin deformar */
   .gal-item img {
     width: 100%;
-    height: auto; /* Esto es clave: mantiene la proporción original */
-    object-fit: contain; /* Muestra la imagen completa dentro de la caja */
+    max-width: 100%;
+    height: auto;
+    object-fit: contain; /* Muestra la foto completa */
     display: block;
     border-radius: 8px;
     transition: transform 0.4s ease;
-    margin: 0 auto;
   }
 
-  /* Efecto zoom suave */
+  /* Efecto zoom */
   .gal-item:hover img {
     transform: scale(1.03);
   }
 
-  /* Ajuste de la cuadrícula flexible */
+  /* Grid flexible */
   .gal-grid {
     display: grid;
     grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
     gap: 1.5rem;
   }
 </style>
-<!-- FIN ESTILOS GALERÍA -->
+<!-- FIN ESTILOS -->
 
-<style>
 /* ==================================================
    NENEMI v2 — Design System
    Filosofía: Claridad comercial con alma biocultural
@@ -2269,6 +2269,16 @@ footer {
       <!-- NUEVA IMAGEN 7: zum.jpg -->
       <div class="gal-item">
         <img src="img/zum.jpg" alt="Peña del Zumate, formación rocosa y bosque" class="gal-img">
+      </div>
+           <!-- NUEVA IMAGEN 8 -->
+      <div class="gal-item">
+        <img src="img/agua21.jpg" alt="Agua" class="gal-img">
+      </div>
+
+
+      <!-- NUEVA IMAGEN 9 -->
+      <div class="gal-item">
+        <img src="img/libelula.jpg" alt="Peña del Zumate, formación rocosa y bosque" class="gal-img">
       </div>
 
     </div>
