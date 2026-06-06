@@ -10,28 +10,47 @@
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,500;1,400;1,500&family=DM+Sans:ital,opsz,wght@0,9..40,300;0,9..40,400;0,9..40,500;1,9..40,300&family=Roboto+Mono:wght@300;400&display=swap" rel="stylesheet">
 
-<!-- ESTILOS GALERÍA (SEGURO Y SIMPLE) -->
+<!-- ESTILOS GALERÍA (CORREGIDO: COLUMNAS ANCHAS Y EQUILIBRADAS) -->
 <style>
+  /* Contenedor de la cuadrícula */
+  .gal-grid {
+    display: grid;
+    /* 
+       ¡Aquí está la clave! 
+       repeat(auto-fit, minmax(300px, 1fr)) significa:
+       "Crea tantas columnas como quepan, pero que cada una mida AL MENOS 300px".
+       Esto evita columnas delgadas.
+    */
+    grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+    gap: 1.5rem; /* Espacio entre fotos */
+    width: 100%;
+  }
+
+  /* Cada tarjeta de imagen */
   .gal-item {
-    border-radius: 8px;
+    position: relative;
     overflow: hidden;
-    background: #141610; /* Color de fondo seguro */
-    min-height: 200px;
+    border-radius: 8px;
+    background: #141610; /* Fondo oscuro para espacios vacíos */
+    min-height: 250px; /* Altura mínima para que no se aplasten */
+    height: 300px; /* Altura fija para uniformidad (opcional, pero recomendado) */
     display: flex;
     align-items: center;
     justify-content: center;
   }
-  
+
+  /* La imagen dentro de la tarjeta */
   .gal-item img {
     width: 100%;
-    height: auto;
+    height: 100%;
+    object-fit: cover; /* Recorta para llenar el cuadro perfecto */
     display: block;
+    transition: transform 0.4s ease;
   }
-  
-  .gal-grid {
-    display: grid;
-    grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
-    gap: 1.5rem;
+
+  /* Efecto zoom al pasar el mouse */
+  .gal-item:hover img {
+    transform: scale(1.05);
   }
 </style>
 <!-- FIN ESTILOS -->
