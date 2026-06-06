@@ -10,39 +10,24 @@
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,500;1,400;1,500&family=DM+Sans:ital,opsz,wght@0,9..40,300;0,9..40,400;0,9..40,500;1,9..40,300&family=Roboto+Mono:wght@300;400&display=swap" rel="stylesheet">
 
-<!-- ESTILOS DE GALERÍA (OPTIMIZADOS: FONDO + SIN RECORTES) -->
+<!-- ESTILOS GALERÍA (SEGURO Y SIMPLE) -->
 <style>
-  /* Caja con fondo del sitio para que los huecos no se vean feos */
   .gal-item {
-    position: relative;
-    overflow: hidden;
     border-radius: 8px;
-    min-height: 240px; /* Altura mínima para que no colapsen */
-    height: auto;
+    overflow: hidden;
+    background: #141610; /* Color de fondo seguro */
+    min-height: 200px;
     display: flex;
     align-items: center;
     justify-content: center;
-    background-color: var(--carbon); /* ¡Aquí está la magia! Usa el color de fondo de tu sitio */
-    border: 1px solid rgba(232,220,198,0.1); /* Borde sutil opcional */
   }
-
-  /* Imagen completa y sin deformar */
+  
   .gal-item img {
     width: 100%;
-    max-width: 100%;
     height: auto;
-    object-fit: contain; /* Muestra la foto completa */
     display: block;
-    border-radius: 8px;
-    transition: transform 0.4s ease;
   }
-
-  /* Efecto zoom */
-  .gal-item:hover img {
-    transform: scale(1.03);
-  }
-
-  /* Grid flexible */
+  
   .gal-grid {
     display: grid;
     grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
@@ -50,9 +35,6 @@
   }
 </style>
 <!-- FIN ESTILOS -->
-<style>
-  
-</style>
 /* ==================================================
    NENEMI v2 — Design System
    Filosofía: Claridad comercial con alma biocultural
